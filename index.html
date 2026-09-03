@@ -204,6 +204,71 @@
     .delay-4 { transition-delay: 0.48s; }
     .delay-5 { transition-delay: 0.6s; }
 
+    /* ==================== SCROLL-DRIVEN MOTION PEEL & REVEAL ==================== */
+    .scroll-peel-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.25rem;
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, rgba(6, 8, 12, 0.95) 80%);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    /* Moving Curtain / Vault Shutter */
+    .scroll-curtain {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: linear-gradient(180deg, #090B10 0%, #111520 60%, #0C0F17 100%);
+      border-bottom: 2px solid #D4AF37;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.2);
+      will-change: transform;
+      transition: transform 0.05s linear;
+    }
+
+    /* Ambient Gold Shimmer Beam at the peel edge */
+    .scroll-beam {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.6) 20%, #FFF8DC 50%, rgba(212, 175, 55, 0.6) 80%, transparent 100%);
+      box-shadow: 0 0 15px 3px rgba(212, 175, 55, 0.9), 0 0 30px 6px rgba(212, 175, 55, 0.4);
+      z-index: 25;
+      pointer-events: none;
+      will-change: top, opacity;
+      transition: top 0.05s linear, opacity 0.2s ease;
+    }
+
+    /* Bottle image underneath that progressively unclips */
+    .scroll-peel-img {
+      position: relative;
+      z-index: 10;
+      will-change: clip-path, transform;
+      transition: clip-path 0.05s linear, transform 0.05s linear;
+    }
+
+    /* Background Ambient Gold Halo Aura */
+    .scroll-aura {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, rgba(212, 175, 55, 0.08) 50%, transparent 70%);
+      filter: blur(40px);
+      z-index: 5;
+      pointer-events: none;
+      will-change: opacity, transform;
+      transition: opacity 0.1s linear, transform 0.1s linear;
+    }
+
     /* Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
@@ -432,19 +497,39 @@
           </div>
         </div>
 
-        <!-- Visual Showcase Card -->
-        <div class="lg:col-span-5 relative reveal-item delay-2">
+        <!-- Visual Showcase Card with Scroll-Driven Motion Peel -->
+        <div class="lg:col-span-5 relative">
           <div class="luxury-card rounded-2xl p-4 border border-royal-gold/30 relative overflow-hidden shadow-2xl">
-            <div class="img-showcase-box h-96 rounded-xl relative flex items-center justify-center p-6 group" onclick="openImageLightbox('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85', 'Royal Oud Imperial', '100ml Pure Extrait · عود إمبراطوري')">
-              <div class="img-shimmer-flare"></div>
-              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Essence" class="reveal-product-img max-h-full max-w-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)] transition-all duration-700" />
+            <div class="scroll-peel-box h-96 relative flex items-center justify-center p-6 group cursor-pointer" onclick="openImageLightbox('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85', 'Royal Oud Imperial', '100ml Pure Extrait · عود إمبراطوري')">
+              
+              <!-- Radiant Gold Halo Behind Bottle -->
+              <div class="scroll-aura"></div>
+
+              <!-- Sliding Shutter / Vault Curtain with Dubai Gold Etching -->
+              <div class="scroll-curtain">
+                <div class="w-14 h-14 rounded-full border border-royal-gold/40 bg-royal-950/90 flex items-center justify-center mb-3 shadow-lg shadow-royal-gold/15">
+                  <i data-lucide="crown" class="w-7 h-7 text-royal-gold"></i>
+                </div>
+                <span class="font-cinzel text-xs font-bold text-royal-gold tracking-[0.25em] uppercase mb-1">ROYAL FLACON VAULT</span>
+                <span class="font-arabic text-xs text-royal-sand/80" dir="rtl">اسحب للأسفل لفتح الزجاجة</span>
+                <div class="flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-neutral-400 font-mono mt-3">
+                  <i data-lucide="arrow-down" class="w-3 h-3 text-royal-gold animate-bounce"></i>
+                  <span>Scroll to Unveil</span>
+                </div>
+              </div>
+
+              <!-- Glowing Gold Laser Beam at the opening seam -->
+              <div class="scroll-beam"></div>
+
+              <!-- Product Bottle Image That Progressively Unveils On Scroll -->
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Essence" class="scroll-peel-img max-h-full max-w-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)]" />
               
               <!-- Quick View Button -->
-              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10">
+              <div class="absolute top-4 right-4 bg-royal-950/90 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-30">
                 <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
               </div>
 
-              <div class="absolute bottom-4 left-4 right-4 bg-royal-950/90 backdrop-blur-md p-3 rounded-lg border border-white/10 flex justify-between items-center z-10">
+              <div class="absolute bottom-4 left-4 right-4 bg-royal-950/90 backdrop-blur-md p-3 rounded-lg border border-white/10 flex justify-between items-center z-30">
                 <div>
                   <span class="font-cinzel text-xs font-bold text-white block">Royal Oud Imperial</span>
                   <span class="text-[10px] text-royal-gold font-mono">100ml Pure Extrait</span>
@@ -498,15 +583,23 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productGrid">
         
         <!-- 1. Luxury Perfume -->
-        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between reveal-item delay-1" data-category="perfume">
+        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="perfume">
           <div>
-            <div class="img-showcase-box relative h-80 rounded-xl mb-6 p-4 flex items-center justify-center group" onclick="openImageLightbox('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85', 'Oud & Amber Imperial', '100ml EDP · عود وعنبر')">
-              <div class="img-shimmer-flare"></div>
-              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Perfume" class="reveal-product-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] transition-all duration-700" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-10">
+            <div class="scroll-peel-box relative h-80 mb-6 p-4 flex items-center justify-center group cursor-pointer" onclick="openImageLightbox('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85', 'Oud & Amber Imperial', '100ml EDP · عود وعنبر')">
+              <div class="scroll-aura"></div>
+              <div class="scroll-curtain">
+                <div class="w-10 h-10 rounded-full border border-royal-gold/40 bg-royal-950/90 flex items-center justify-center mb-2 shadow-lg shadow-royal-gold/15">
+                  <i data-lucide="crown" class="w-5 h-5 text-royal-gold"></i>
+                </div>
+                <span class="font-cinzel text-[10px] font-bold text-royal-gold tracking-[0.2em] uppercase mb-0.5">ROYAL ATELIER</span>
+                <span class="text-[8px] uppercase tracking-widest text-neutral-400 font-mono">Scroll to Unveil</span>
+              </div>
+              <div class="scroll-beam"></div>
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Perfume" class="scroll-peel-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-30">
                 100ml EDP · عطر فاخر
               </div>
-              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10">
+              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-30">
                 <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -527,15 +620,23 @@
         </div>
 
         <!-- 2. Aerosol Air Freshener -->
-        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between reveal-item delay-2" data-category="airfreshener">
+        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="airfreshener">
           <div>
-            <div class="img-showcase-box relative h-80 rounded-xl mb-6 p-4 flex items-center justify-center group" onclick="openImageLightbox('https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1200&q=85', 'Air Freshener Prestige Mist', '300ml Aerosol · معطر جو فاخر')">
-              <div class="img-shimmer-flare"></div>
-              <img src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Air Freshener" class="reveal-product-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] transition-all duration-700" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-10">
+            <div class="scroll-peel-box relative h-80 mb-6 p-4 flex items-center justify-center group cursor-pointer" onclick="openImageLightbox('https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1200&q=85', 'Air Freshener Prestige Mist', '300ml Aerosol · معطر جو فاخر')">
+              <div class="scroll-aura"></div>
+              <div class="scroll-curtain">
+                <div class="w-10 h-10 rounded-full border border-royal-gold/40 bg-royal-950/90 flex items-center justify-center mb-2 shadow-lg shadow-royal-gold/15">
+                  <i data-lucide="sparkles" class="w-5 h-5 text-royal-gold"></i>
+                </div>
+                <span class="font-cinzel text-[10px] font-bold text-royal-gold tracking-[0.2em] uppercase mb-0.5">AEROSOL ATELIER</span>
+                <span class="text-[8px] uppercase tracking-widest text-neutral-400 font-mono">Scroll to Unveil</span>
+              </div>
+              <div class="scroll-beam"></div>
+              <img src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Air Freshener" class="scroll-peel-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-30">
                 300ml Aerosol · معطر الجو
               </div>
-              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10">
+              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-30">
                 <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -556,15 +657,23 @@
         </div>
 
         <!-- 3. Body Spray -->
-        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between reveal-item delay-3" data-category="bodyspray">
+        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="bodyspray">
           <div>
-            <div class="img-showcase-box relative h-80 rounded-xl mb-6 p-4 flex items-center justify-center group" onclick="openImageLightbox('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85', 'Aura Active Performance', '200ml Deodorant · بخاخ جسم')">
-              <div class="img-shimmer-flare"></div>
-              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Body Spray" class="reveal-product-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] transition-all duration-700" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-10">
+            <div class="scroll-peel-box relative h-80 mb-6 p-4 flex items-center justify-center group cursor-pointer" onclick="openImageLightbox('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85', 'Aura Active Performance', '200ml Deodorant · بخاخ جسم')">
+              <div class="scroll-aura"></div>
+              <div class="scroll-curtain">
+                <div class="w-10 h-10 rounded-full border border-royal-gold/40 bg-royal-950/90 flex items-center justify-center mb-2 shadow-lg shadow-royal-gold/15">
+                  <i data-lucide="flame" class="w-5 h-5 text-royal-gold"></i>
+                </div>
+                <span class="font-cinzel text-[10px] font-bold text-royal-gold tracking-[0.2em] uppercase mb-0.5">PERFORMANCE ACTIVE</span>
+                <span class="text-[8px] uppercase tracking-widest text-neutral-400 font-mono">Scroll to Unveil</span>
+              </div>
+              <div class="scroll-beam"></div>
+              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Body Spray" class="scroll-peel-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-30">
                 200ml Deodorant · بخاخ جسم
               </div>
-              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10">
+              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-30">
                 <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -585,15 +694,23 @@
         </div>
 
         <!-- 4. Skin Radiance Serums -->
-        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between reveal-item delay-1" data-category="skincare">
+        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="skincare">
           <div>
-            <div class="img-showcase-box relative h-80 rounded-xl mb-6 p-4 flex items-center justify-center group" onclick="openImageLightbox('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=85', 'Radiance Boosting Serums', '30ml Derma · سيروم عناية')">
-              <div class="img-shimmer-flare"></div>
-              <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Serum" class="reveal-product-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] transition-all duration-700" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-10">
+            <div class="scroll-peel-box relative h-80 mb-6 p-4 flex items-center justify-center group cursor-pointer" onclick="openImageLightbox('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=85', 'Radiance Boosting Serums', '30ml Derma · سيروم عناية')">
+              <div class="scroll-aura"></div>
+              <div class="scroll-curtain">
+                <div class="w-10 h-10 rounded-full border border-royal-gold/40 bg-royal-950/90 flex items-center justify-center mb-2 shadow-lg shadow-royal-gold/15">
+                  <i data-lucide="droplet" class="w-5 h-5 text-royal-gold"></i>
+                </div>
+                <span class="font-cinzel text-[10px] font-bold text-royal-gold tracking-[0.2em] uppercase mb-0.5">CELLULAR DERMA</span>
+                <span class="text-[8px] uppercase tracking-widest text-neutral-400 font-mono">Scroll to Unveil</span>
+              </div>
+              <div class="scroll-beam"></div>
+              <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Serum" class="scroll-peel-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-30">
                 30ml Derma · سيروم عناية
               </div>
-              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10">
+              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-30">
                 <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -614,15 +731,23 @@
         </div>
 
         <!-- 5. Cosmetics Line -->
-        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between reveal-item delay-2" data-category="skincare">
+        <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="skincare">
           <div>
-            <div class="img-showcase-box relative h-80 rounded-xl mb-6 p-4 flex items-center justify-center group" onclick="openImageLightbox('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1200&q=85', 'Velvet Lip & Silk Foundation', 'Velvet Matte · مستحضرات تجميل')">
-              <div class="img-shimmer-flare"></div>
-              <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Cosmetics" class="reveal-product-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] transition-all duration-700" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-10">
+            <div class="scroll-peel-box relative h-80 mb-6 p-4 flex items-center justify-center group cursor-pointer" onclick="openImageLightbox('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1200&q=85', 'Velvet Lip & Silk Foundation', 'Velvet Matte · مستحضرات تجميل')">
+              <div class="scroll-aura"></div>
+              <div class="scroll-curtain">
+                <div class="w-10 h-10 rounded-full border border-royal-gold/40 bg-royal-950/90 flex items-center justify-center mb-2 shadow-lg shadow-royal-gold/15">
+                  <i data-lucide="gem" class="w-5 h-5 text-royal-gold"></i>
+                </div>
+                <span class="font-cinzel text-[10px] font-bold text-royal-gold tracking-[0.2em] uppercase mb-0.5">VELVET COSMETICS</span>
+                <span class="text-[8px] uppercase tracking-widest text-neutral-400 font-mono">Scroll to Unveil</span>
+              </div>
+              <div class="scroll-beam"></div>
+              <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Cosmetics" class="scroll-peel-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-30">
                 Velvet Matte · مستحضرات تجميل
               </div>
-              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10">
+              <div class="absolute top-4 right-4 bg-royal-950/80 border border-royal-gold/40 text-royal-gold w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-30">
                 <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -1198,6 +1323,72 @@
       el.classList.add('reveal-item');
       revealObserver.observe(el);
     });
+
+    // ==================== REAL-TIME SCROLL-DRIVEN MOTION PEEL & REVEAL ====================
+    // User requested: As user scrolls down, curtain/shutter slides off smoothly, revealing the bottle
+    // (half bottle visible midway, 100% open at center of screen, smoothly closing back when scrolling away)
+    function updateScrollMotion() {
+      const windowHeight = window.innerHeight;
+      const centerY = windowHeight * 0.5;
+
+      document.querySelectorAll('.scroll-peel-box').forEach(box => {
+        const rect = box.getBoundingClientRect();
+        const elemCenter = rect.top + rect.height * 0.5;
+
+        // Progress: 0 when just entering from bottom, 1.0 when centered in screen, 0 when leaving towards top
+        let progress = 0;
+        if (elemCenter >= centerY) {
+          // Bottom half of viewport
+          const totalDist = windowHeight - centerY;
+          const currentDist = windowHeight - elemCenter;
+          progress = currentDist / totalDist;
+        } else {
+          // Top half of viewport
+          const totalDist = centerY;
+          const currentDist = elemCenter;
+          progress = currentDist / totalDist;
+        }
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Smooth sinusoidal curve for high-end luxury feel
+        const ease = Math.sin((progress * Math.PI) / 2);
+
+        // 1. Vault Curtain slides up: from 0% (closed) to -105% (completely open)
+        const curtain = box.querySelector('.scroll-curtain');
+        if (curtain) {
+          curtain.style.transform = `translateY(-${(ease * 105).toFixed(2)}%)`;
+          curtain.style.opacity = (1 - ease * 0.95).toFixed(3);
+        }
+
+        // 2. Glowing Gold Beam at the opening seam line
+        const beam = box.querySelector('.scroll-beam');
+        if (beam) {
+          beam.style.top = `${((1 - ease) * 100).toFixed(2)}%`;
+          beam.style.opacity = (ease > 0.04 && ease < 0.96) ? '1' : (ease >= 0.96 ? '0' : '0.2');
+        }
+
+        // 3. Progressive clip-path unmasking of the bottle image
+        const img = box.querySelector('.scroll-peel-img');
+        if (img) {
+          const clipBottom = ((1 - ease) * 100).toFixed(2);
+          img.style.clipPath = `inset(0% 0% ${clipBottom}% 0%)`;
+          img.style.transform = `scale(${(0.92 + ease * 0.08).toFixed(3)})`;
+        }
+
+        // 4. Gold ambient back-glow radiates at screen center
+        const aura = box.querySelector('.scroll-aura');
+        if (aura) {
+          aura.style.opacity = (ease * 0.9).toFixed(3);
+          aura.style.transform = `translate(-50%, -50%) scale(${(0.6 + ease * 0.4).toFixed(3)})`;
+        }
+      });
+    }
+
+    // Connect updateScrollMotion to Lenis, standard scroll, and resize
+    lenis.on('scroll', updateScrollMotion);
+    window.addEventListener('scroll', updateScrollMotion, { passive: true });
+    window.addEventListener('resize', updateScrollMotion);
+    setTimeout(updateScrollMotion, 150);
 
     // Category Filter Handler
     function filterCategory(category) {
