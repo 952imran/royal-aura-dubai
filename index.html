@@ -113,6 +113,62 @@
       transform: translateY(0);
     }
 
+    /* ==================== CLOUD / MIST STYLE UNVEIL ANIMATION ==================== */
+    .cloud-unveil-box {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Bottle image starting in soft misty cloud and expanding outward */
+    .cloud-unveil-img {
+      opacity: 0.05;
+      transform: scale(0.88);
+      filter: blur(20px) brightness(0.65);
+      clip-path: circle(12% at 50% 50%);
+      transition: clip-path 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 1.4s ease-out,
+                  opacity 1.2s ease-out;
+      will-change: clip-path, transform, filter, opacity;
+    }
+
+    /* Unveiled: full crystal clarity, edge-to-edge cloud expansion */
+    .cloud-unveil-box.cloud-active .cloud-unveil-img {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px) brightness(1);
+      clip-path: circle(140% at 50% 50%);
+    }
+
+    /* Hover effect preserved */
+    .cloud-unveil-box.cloud-active:hover .cloud-unveil-img {
+      transform: scale(1.06);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Ambient Fragrance Mist Aura Blooming Behind Bottle */
+    .cloud-aura-halo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0.3);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, rgba(212, 175, 55, 0.12) 50%, transparent 72%);
+      filter: blur(35px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 1.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 1.4s ease-out;
+      z-index: 1;
+    }
+
+    .cloud-unveil-box.cloud-active .cloud-aura-halo {
+      opacity: 0.85;
+      transform: translate(-50%, -50%) scale(1.7);
+    }
+
     /* Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
@@ -344,9 +400,10 @@
         <!-- Visual Showcase Card -->
         <div class="lg:col-span-5 relative">
           <div class="luxury-card rounded-2xl p-4 border border-royal-gold/30 relative overflow-hidden shadow-2xl">
-            <div class="h-96 rounded-xl overflow-hidden relative bg-royal-950 flex items-center justify-center p-6">
-              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Essence" class="max-h-full max-w-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)] hover:scale-105 transition-transform duration-700" />
-              <div class="absolute bottom-4 left-4 right-4 bg-royal-950/90 backdrop-blur-md p-3 rounded-lg border border-white/10 flex justify-between items-center">
+            <div class="h-96 rounded-xl overflow-hidden relative bg-royal-950 flex items-center justify-center p-6 cloud-unveil-box">
+              <div class="cloud-aura-halo"></div>
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Essence" class="cloud-unveil-img max-h-full max-w-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)] relative z-10" />
+              <div class="absolute bottom-4 left-4 right-4 bg-royal-950/90 backdrop-blur-md p-3 rounded-lg border border-white/10 flex justify-between items-center z-20">
                 <div>
                   <span class="font-cinzel text-xs font-bold text-white block">Royal Oud Imperial</span>
                   <span class="text-[10px] text-royal-gold font-mono">100ml Pure Extrait</span>
@@ -402,9 +459,10 @@
         <!-- 1. Luxury Perfume -->
         <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="perfume">
           <div>
-            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center">
-              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Perfume" class="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase">
+            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center cloud-unveil-box">
+              <div class="cloud-aura-halo"></div>
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Perfume" class="cloud-unveil-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] relative z-10" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-20">
                 100ml EDP · عطر فاخر
               </div>
             </div>
@@ -427,9 +485,10 @@
         <!-- 2. Aerosol Air Freshener -->
         <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="airfreshener">
           <div>
-            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center">
-              <img src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Air Freshener" class="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase">
+            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center cloud-unveil-box">
+              <div class="cloud-aura-halo"></div>
+              <img src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Air Freshener" class="cloud-unveil-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] relative z-10" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-20">
                 300ml Aerosol · معطر الجو
               </div>
             </div>
@@ -452,9 +511,10 @@
         <!-- 3. Body Spray -->
         <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="bodyspray">
           <div>
-            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center">
-              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Body Spray" class="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase">
+            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center cloud-unveil-box">
+              <div class="cloud-aura-halo"></div>
+              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Body Spray" class="cloud-unveil-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] relative z-10" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-20">
                 200ml Deodorant · بخاخ جسم
               </div>
             </div>
@@ -477,9 +537,10 @@
         <!-- 4. Skin Radiance Serums -->
         <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="skincare">
           <div>
-            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center">
-              <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Serum" class="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase">
+            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center cloud-unveil-box">
+              <div class="cloud-aura-halo"></div>
+              <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Serum" class="cloud-unveil-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] relative z-10" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-20">
                 30ml Derma · سيروم عناية
               </div>
             </div>
@@ -502,9 +563,10 @@
         <!-- 5. Cosmetics Line -->
         <div class="luxury-card rounded-2xl overflow-hidden group p-6 flex flex-col justify-between" data-category="skincare">
           <div>
-            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center">
-              <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Cosmetics" class="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase">
+            <div class="relative h-80 rounded-xl overflow-hidden mb-6 bg-gradient-to-b from-royal-900/60 to-royal-950/90 border border-white/5 p-4 flex items-center justify-center cloud-unveil-box">
+              <div class="cloud-aura-halo"></div>
+              <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80" alt="Royal Aura Cosmetics" class="cloud-unveil-img max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] relative z-10" />
+              <div class="absolute top-4 left-4 bg-royal-950/90 backdrop-blur-md px-3 py-1 rounded-full border border-royal-gold/30 text-[10px] font-semibold tracking-wider text-royal-gold uppercase z-20">
                 Velvet Matte · مستحضرات تجميل
               </div>
             </div>
@@ -1048,6 +1110,27 @@
     document.querySelectorAll('.reveal-item, .luxury-card').forEach(el => {
       el.classList.add('reveal-item');
       revealObserver.observe(el);
+    });
+
+    // Cloud Style Mist Unveil Observer on Scroll
+    const cloudObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('cloud-active');
+        } else {
+          const rect = entry.target.getBoundingClientRect();
+          if (rect.top > window.innerHeight || rect.bottom < 0) {
+            entry.target.classList.remove('cloud-active');
+          }
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -20px 0px'
+    });
+
+    document.querySelectorAll('.cloud-unveil-box').forEach(el => {
+      cloudObserver.observe(el);
     });
 
     // Category Filter Handler
