@@ -42,7 +42,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
-    /* Custom Luxury & MyUS Clean Styling */
     ::selection { background: #C59B27; color: #ffffff; }
 
     .gold-gradient-text {
@@ -59,39 +58,45 @@
       background: linear-gradient(135deg, #0A142F 0%, #10214D 100%);
     }
 
-    /* Floating Air Freshener Animations */
-    @keyframes floatAerosol {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-        filter: drop-shadow(0 20px 25px rgba(10, 20, 47, 0.18));
-      }
-      50% {
-        transform: translateY(-18px) rotate(1.5deg);
-        filter: drop-shadow(0 35px 35px rgba(197, 155, 39, 0.25));
-      }
+    /* CONTINUOUS HORIZONTAL MARQUEE ANIMATION (MyUS Style) */
+    @keyframes marqueeLeft {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
     }
 
-    @keyframes scentMistGlow {
-      0%, 100% { transform: scale(0.95); opacity: 0.45; }
-      50% { transform: scale(1.15); opacity: 0.85; }
+    @keyframes marqueeRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0%); }
     }
 
-    .floating-can {
-      animation: floatAerosol 5s ease-in-out infinite;
-      transform-origin: center bottom;
-      transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+    .marquee-track-left {
+      display: flex;
+      width: max-content;
+      animation: marqueeLeft 36s linear infinite;
     }
 
-    .scent-aura {
-      animation: scentMistGlow 4s ease-in-out infinite;
+    .marquee-track-right {
+      display: flex;
+      width: max-content;
+      animation: marqueeRight 40s linear infinite;
     }
 
-    .can-tilt-box {
-      perspective: 1000px;
+    .marquee-container:hover .marquee-track-left,
+    .marquee-container:hover .marquee-track-right {
+      animation-play-state: paused;
+    }
+
+    /* Can Floating Subtle Physics */
+    @keyframes subtleHover {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .hover-can:hover {
+      animation: subtleHover 2s ease-in-out infinite;
     }
 
     /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
     ::-webkit-scrollbar-track { background: #F1F5F9; }
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #C59B27; }
@@ -99,20 +104,13 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Product Card Hover Zoom */
+    /* Product Card Hover */
     .product-card {
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 30px -10px rgba(10, 20, 47, 0.12), 0 0 0 1px rgba(197, 155, 39, 0.2);
-    }
-
-    .card-img-wrap img {
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .product-card:hover .card-img-wrap img {
-      transform: scale(1.04);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 25px -8px rgba(10, 20, 47, 0.12), 0 0 0 1px rgba(197, 155, 39, 0.25);
     }
   </style>
 </head>
@@ -121,7 +119,6 @@
   <!-- 1. TOP GLOBAL TRADE UTILITY BAR (MyUS Style) -->
   <div class="bg-royal-deep text-slate-300 text-xs py-2 px-4 border-b border-royal-blue/30">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <!-- Left: Dubai Hub & Licensing -->
       <div class="flex items-center space-x-4">
         <span class="flex items-center text-amber-400 font-semibold">
           <img src="https://flagcdn.com/w20/ae.png" alt="UAE" class="w-4 h-3 inline mr-1.5 rounded-sm shadow" />
@@ -129,18 +126,17 @@
         </span>
         <span class="hidden md:inline text-slate-400">|</span>
         <span class="hidden md:flex items-center text-slate-300">
-          <i class="fa-regular fa-clock text-amber-400/80 mr-1"></i> Gulf Standard Time (GMT+4)
+          <i class="fa-regular fa-clock text-amber-400/80 mr-1"></i> GMT+4 Dubai
         </span>
         <span class="hidden lg:inline text-slate-400">|</span>
         <span class="hidden lg:inline text-emerald-400 font-medium">
-          <i class="fa-solid fa-circle-check mr-1"></i> 100% Genuine Export Stock
+          <i class="fa-solid fa-circle-check mr-1"></i> 100% Genuine Export Stocks
         </span>
       </div>
 
-      <!-- Right: Direct B2B Fast Desk & Currency -->
       <div class="flex items-center space-x-4 text-xs">
         <span class="text-slate-300 hidden sm:inline">
-          <i class="fa-solid fa-ship text-amber-400 mr-1"></i> Air & Sea Freight from Jebel Ali (JAFZA)
+          <i class="fa-solid fa-ship text-amber-400 mr-1"></i> Direct Air & Sea Freight from JAFZA
         </span>
         <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura%20Trading,%20I%20want%20wholesale%20quote" target="_blank" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center transition">
           <i class="fa-brands fa-whatsapp text-sm mr-1"></i> WhatsApp Desk
@@ -152,187 +148,175 @@
   <!-- 2. MAIN NAVIGATION (MyUS Clean Corporate Style) -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-16 sm:h-20">
         
-        <!-- Logo & Brand Crest -->
-        <a href="#" class="flex items-center space-x-3.5 group">
-          <div class="w-11 h-11 rounded-xl navy-gradient-bg flex items-center justify-center text-amber-400 font-serif font-bold text-xl shadow-md border border-royal-gold/40 group-hover:scale-105 transition-transform">
+        <!-- Logo -->
+        <a href="#" class="flex items-center space-x-3 group">
+          <div class="w-10 h-10 rounded-xl navy-gradient-bg flex items-center justify-center text-amber-400 font-serif font-bold text-lg shadow-md border border-royal-gold/40 group-hover:scale-105 transition-transform">
             <span>RA</span>
           </div>
           <div class="flex flex-col">
-            <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-royal-navy leading-none">
+            <span class="font-serif text-lg sm:text-xl font-bold tracking-tight text-royal-navy leading-none">
               ROYAL AURA
             </span>
-            <span class="text-[10px] tracking-[0.2em] font-semibold text-slate-500 uppercase mt-1">
+            <span class="text-[9px] sm:text-[10px] tracking-[0.2em] font-semibold text-slate-500 uppercase mt-1">
               General Trading L.L.C. &bull; Dubai
             </span>
           </div>
         </a>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-700">
-          <a href="#vip-airfreshener" class="hover:text-royal-gold transition flex items-center font-semibold text-royal-navy">
-            <i class="fa-solid fa-wind text-royal-gold mr-1.5"></i> Air Fresheners <span class="ml-1.5 px-2 py-0.5 text-[10px] uppercase font-bold bg-amber-100 text-amber-800 rounded-full border border-amber-300">VIP</span>
+        <nav class="hidden lg:flex items-center space-x-7 font-medium text-sm text-slate-700">
+          <a href="#vip-airfreshener" class="hover:text-royal-gold transition flex items-center font-bold text-royal-navy">
+            <i class="fa-solid fa-wind text-royal-gold mr-1.5"></i> Air Fresheners <span class="ml-1.5 px-2 py-0.5 text-[9px] uppercase font-bold bg-amber-100 text-amber-800 rounded-full border border-amber-300">VIP</span>
           </a>
           <a href="#brand-catalog" class="hover:text-royal-navy transition">FMCG Brands</a>
           <a href="#bodysprays" class="hover:text-royal-navy transition">Body Sprays</a>
-          <a href="#why-royal" class="hover:text-royal-navy transition">Export Logistics</a>
-          <a href="#b2b-calculator" class="hover:text-royal-navy transition">Shipping Calculator</a>
+          <a href="#b2b-calculator" class="hover:text-royal-navy transition">Freight Calculator</a>
         </nav>
 
-        <!-- Action CTAs (MyUS Style) -->
+        <!-- Action CTAs -->
         <div class="hidden sm:flex items-center space-x-3">
-          <a href="#b2b-calculator" class="px-4 py-2.5 text-xs font-bold text-royal-navy bg-slate-100 hover:bg-slate-200 rounded-lg transition border border-slate-300 flex items-center">
-            <i class="fa-solid fa-calculator mr-1.5 text-slate-500"></i> Freight Estimate
+          <a href="#b2b-calculator" class="px-3.5 py-2 text-xs font-bold text-royal-navy bg-slate-100 hover:bg-slate-200 rounded-lg transition border border-slate-300 flex items-center">
+            <i class="fa-solid fa-calculator mr-1.5 text-slate-500"></i> CBM Estimate
           </a>
-          <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20please%20send%20full%20wholesale%20price%20list" target="_blank" class="px-5 py-2.5 text-xs font-bold text-white gold-gradient-bg hover:opacity-95 rounded-lg shadow-md hover:shadow-lg transition flex items-center space-x-1.5">
+          <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20please%20send%20full%20wholesale%20catalog" target="_blank" class="px-4 py-2 text-xs font-bold text-white gold-gradient-bg hover:opacity-95 rounded-lg shadow transition flex items-center space-x-1.5">
             <i class="fa-solid fa-file-invoice text-xs"></i>
-            <span>Get Wholesale Catalog</span>
+            <span>Wholesale Catalog</span>
           </a>
         </div>
 
         <!-- Mobile Menu Toggle -->
-        <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition">
-          <i class="fa-solid fa-bars text-xl"></i>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition">
+          <i class="fa-solid fa-bars text-lg"></i>
         </button>
       </div>
     </div>
 
     <!-- Mobile Drawer -->
     <div id="mobileDrawer" class="lg:hidden hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3">
-      <a href="#vip-airfreshener" class="block py-2 text-base font-semibold text-royal-navy border-b border-slate-100">
-        🌟 D'VOLA Air Fresheners (VIP)
+      <a href="#vip-airfreshener" class="block py-2 text-sm font-bold text-royal-navy border-b border-slate-100">
+        🌟 D'VOLA Air Fresheners (Moving VIP)
       </a>
-      <a href="#brand-catalog" class="block py-2 text-base font-medium text-slate-700 border-b border-slate-100">
+      <a href="#brand-catalog" class="block py-2 text-sm font-medium text-slate-700 border-b border-slate-100">
         🏢 Global Brands (Dove, Axe, Nivea...)
       </a>
-      <a href="#bodysprays" class="block py-2 text-base font-medium text-slate-700 border-b border-slate-100">
+      <a href="#bodysprays" class="block py-2 text-sm font-medium text-slate-700 border-b border-slate-100">
         💨 Body Sprays & Deodorants
       </a>
-      <a href="#b2b-calculator" class="block py-2 text-base font-medium text-slate-700 border-b border-slate-100">
-        📦 B2B Freight Calculator
+      <a href="#b2b-calculator" class="block py-2 text-sm font-medium text-slate-700 border-b border-slate-100">
+        📦 Freight Calculator
       </a>
-      <div class="pt-2 flex flex-col gap-2">
-        <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20need%20wholesale%20catalog" target="_blank" class="w-full py-3 text-center text-sm font-bold text-white gold-gradient-bg rounded-lg shadow">
+      <div class="pt-2">
+        <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20need%20wholesale%20quote" target="_blank" class="block w-full py-2.5 text-center text-xs font-bold text-white gold-gradient-bg rounded-lg shadow">
           <i class="fa-brands fa-whatsapp mr-1"></i> Request B2B Quote
         </a>
       </div>
     </div>
   </header>
 
-  <!-- 3. HERO SECTION (Clean MyUS Value-Proposition + Dubai Hub) -->
-  <section class="relative bg-gradient-to-b from-white via-[#F4F7FC] to-[#E9EEF7] py-14 lg:py-20 border-b border-slate-200 overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
-
+  <!-- 3. HERO SECTION (Compact, Modern, Screen-Fitting) -->
+  <section class="relative bg-gradient-to-b from-white via-[#F4F7FC] to-[#E9EEF7] py-10 sm:py-14 border-b border-slate-200 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
-        <!-- Left: Headline & Trust (7 cols) -->
-        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-          
-          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300/80 text-amber-900 text-xs font-semibold shadow-sm">
+        <!-- Left Column -->
+        <div class="lg:col-span-7 space-y-4 text-center lg:text-left">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-300/80 text-amber-900 text-xs font-semibold shadow-sm">
             <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-            <span>DUBAI B2B GLOBAL SUPPLY HUB &bull; DIRECT MANUFACTURER ALLIANCES</span>
+            <span>DUBAI GLOBAL EXPORT &bull; DIRECT FMCG DISTRIBUTION</span>
           </div>
 
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold text-royal-navy leading-[1.15]">
-            Global FMCG & Fragrance Distribution, <span class="gold-gradient-text">Direct From Dubai.</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-royal-navy leading-[1.15]">
+            Global FMCG & Fragrance Supply, <span class="gold-gradient-text">Direct From Dubai.</span>
           </h1>
 
-          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-            Wholesale supply of international personal care brands—<strong class="text-royal-navy font-semibold">Dove, Nivea, Axe, Vaseline, St. Ives</strong>—alongside our signature <strong class="text-amber-800 font-semibold">D'VOLA Paris Air Freshener</strong> collections for worldwide import and re-export.
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            B2B distribution of international personal care brands—<strong class="text-royal-navy font-semibold">Dove, Nivea, Axe, Vaseline, St. Ives</strong>—and our signature <strong class="text-amber-800 font-semibold">D'VOLA Paris Air Fresheners</strong> for worldwide import and re-export.
           </p>
 
-          <!-- Action Buttons (MyUS Style) -->
-          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
-            <a href="#vip-airfreshener" class="w-full sm:w-auto px-7 py-3.5 rounded-xl text-white font-bold text-sm gold-gradient-bg shadow-md hover:shadow-xl transition-all flex items-center justify-center space-x-2">
-              <span>Explore VIP Air Freshener Line</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
+            <a href="#vip-airfreshener" class="w-full sm:w-auto px-6 py-3 rounded-xl text-white font-bold text-xs gold-gradient-bg shadow-md hover:shadow-lg transition flex items-center justify-center space-x-2">
+              <span>View Moving Air Freshener Gallery</span>
+              <i class="fa-solid fa-arrow-down text-xs"></i>
             </a>
-            <a href="#brand-catalog" class="w-full sm:w-auto px-7 py-3.5 rounded-xl text-royal-navy font-bold text-sm bg-white hover:bg-slate-50 border border-slate-300 shadow-sm transition flex items-center justify-center space-x-2">
+            <a href="#brand-catalog" class="w-full sm:w-auto px-6 py-3 rounded-xl text-royal-navy font-bold text-xs bg-white hover:bg-slate-50 border border-slate-300 shadow-sm transition flex items-center justify-center space-x-2">
               <i class="fa-solid fa-boxes-stacked text-royal-gold"></i>
-              <span>Browse By Brand</span>
+              <span>Filter By Brand</span>
             </a>
           </div>
 
-          <!-- Trust Badges Row (MyUS Style) -->
-          <div class="pt-6 border-t border-slate-200/80 grid grid-cols-3 gap-4 text-left max-w-lg mx-auto lg:mx-0">
+          <div class="pt-4 border-t border-slate-200/80 grid grid-cols-3 gap-3 text-left max-w-md mx-auto lg:mx-0">
             <div>
-              <div class="text-xl sm:text-2xl font-bold text-royal-navy font-serif">100%</div>
-              <div class="text-xs text-slate-500 mt-0.5">Authentic Certified Stocks</div>
+              <div class="text-lg sm:text-xl font-bold text-royal-navy font-serif">100%</div>
+              <div class="text-[11px] text-slate-500">Genuine Factory Stock</div>
             </div>
             <div>
-              <div class="text-xl sm:text-2xl font-bold text-royal-navy font-serif">FCL / LCL</div>
-              <div class="text-xs text-slate-500 mt-0.5">Flexible Container Loads</div>
+              <div class="text-lg sm:text-xl font-bold text-royal-navy font-serif">FCL / LCL</div>
+              <div class="text-[11px] text-slate-500">Full Pallets & Containers</div>
             </div>
             <div>
-              <div class="text-xl sm:text-2xl font-bold text-royal-navy font-serif">45+</div>
-              <div class="text-xs text-slate-500 mt-0.5">Export Destination Ports</div>
+              <div class="text-lg sm:text-xl font-bold text-royal-navy font-serif">45+ Ports</div>
+              <div class="text-[11px] text-slate-500">Global Destination Reach</div>
             </div>
           </div>
         </div>
 
-        <!-- Right: MyUS Style Quick Order / Rate Card (5 cols) -->
+        <!-- Right Column: Quick RFQ Box -->
         <div class="lg:col-span-5">
-          <div class="bg-white rounded-2xl p-6 sm:p-7 shadow-xl border border-slate-200 relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 gold-gradient-bg"></div>
+          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-200 relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-1 gold-gradient-bg"></div>
 
-            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
-                <h2 class="font-serif font-bold text-lg text-royal-navy">B2B Quick Freight RFQ</h2>
-                <p class="text-xs text-slate-500 mt-0.5">Get Dubai FOB / CIF container quotation</p>
+                <h2 class="font-serif font-bold text-base text-royal-navy">Fast B2B Freight Quote</h2>
+                <p class="text-[11px] text-slate-500">FOB Jebel Ali / CIF Worldwide Rates</p>
               </div>
-              <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm border border-amber-200">
+              <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xs border border-amber-200">
                 <i class="fa-solid fa-bolt"></i>
               </div>
             </div>
 
-            <!-- Interactive Quick Inquiry Form -->
-            <form id="heroRfqForm" class="space-y-4 mt-5 text-left">
+            <form id="heroRfqForm" class="space-y-3 mt-4 text-left">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Target Brand / Category</label>
-                <select id="heroCategory" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-gold/50">
+                <label class="block text-[11px] font-semibold text-slate-700 mb-1">Target Product</label>
+                <select id="heroCategory" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-royal-gold">
                   <option value="D'VOLA Paris Air Fresheners (300ml)">D'VOLA Paris Air Fresheners (VIP)</option>
                   <option value="Dove Personal Care & Deodorants">Dove Personal Care & Deodorants</option>
-                  <option value="Nivea Men & Women Deodorants">Nivea Deodorants & Roll-Ons</option>
+                  <option value="Nivea Men & Women Deodorants">Nivea Deodorants (Germany)</option>
                   <option value="Axe Body Sprays 150ml">Axe Body Sprays (150ml x 72)</option>
                   <option value="Vaseline / St. Ives Lotions">Vaseline & St. Ives Lotions</option>
                   <option value="Mixed FMCG Container Load">Mixed FMCG Container Load</option>
                 </select>
               </div>
 
-              <div class="grid grid-cols-2 gap-3">
+              <div class="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">Order Volume</label>
-                  <select id="heroVolume" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-gold/50">
-                    <option value="20ft Full Container Load (FCL)">20ft FCL Container</option>
-                    <option value="40ft High Cube Container">40ft HQ Container</option>
-                    <option value="5 to 10 Pallets (LCL)">5-10 Pallets (LCL)</option>
-                    <option value="1 to 4 Pallets (Trial)">1-4 Pallets (Trial)</option>
-                    <option value="Sample Master Carton">Sample Carton</option>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Order Volume</label>
+                  <select id="heroVolume" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-royal-gold">
+                    <option value="20ft Full Container (FCL)">20ft Container</option>
+                    <option value="40ft HQ Container">40ft HQ Container</option>
+                    <option value="5-10 Pallets (LCL)">5-10 Pallets</option>
+                    <option value="1-4 Pallets (Trial)">1-4 Pallets</option>
+                    <option value="Sample Carton">Sample Carton</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">Destination Country</label>
-                  <input type="text" id="heroDestination" placeholder="e.g. Saudi, Kenya, UK" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-gold/50" required />
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Destination</label>
+                  <input type="text" id="heroDestination" placeholder="e.g. Saudi, Kenya, UK" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-royal-gold" required />
                 </div>
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Your WhatsApp / Phone</label>
-                <input type="tel" id="heroPhone" placeholder="+971 50 000 0000" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-gold/50" required />
+                <label class="block text-[11px] font-semibold text-slate-700 mb-1">WhatsApp Number</label>
+                <input type="tel" id="heroPhone" placeholder="+971 50 000 0000" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-royal-gold" required />
               </div>
 
-              <button type="submit" class="w-full py-3.5 rounded-lg text-white font-bold text-sm bg-emerald-600 hover:bg-emerald-700 shadow-md hover:shadow-lg transition flex items-center justify-center space-x-2">
-                <i class="fa-brands fa-whatsapp text-base"></i>
-                <span>Send WhatsApp RFQ to Dubai Desk</span>
+              <button type="submit" class="w-full py-2.5 rounded-lg text-white font-bold text-xs bg-emerald-600 hover:bg-emerald-700 shadow transition flex items-center justify-center space-x-1.5">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>Get Instant WhatsApp Quote</span>
               </button>
             </form>
-
-            <div class="mt-4 flex items-center justify-between text-[11px] text-slate-500 pt-3 border-t border-slate-100">
-              <span class="flex items-center"><i class="fa-solid fa-lock mr-1 text-slate-400"></i> Direct Dubai DED Licensed</span>
-              <span>Fast 15-Min Response</span>
-            </div>
           </div>
         </div>
 
@@ -340,333 +324,344 @@
     </div>
   </section>
 
-  <!-- 4. LOGISTICS PARTNERS BAR (MyUS Style) -->
-  <div class="bg-white py-6 border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-wrap items-center justify-between gap-6 text-slate-400">
-        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Global Freight & Clearance:</span>
-        <div class="flex flex-wrap items-center gap-8 text-sm font-semibold text-slate-600">
-          <span class="flex items-center"><i class="fa-brands fa-dhl text-2xl text-red-600 mr-2"></i> DHL Global Forwarding</span>
-          <span class="flex items-center"><i class="fa-brands fa-fedex text-2xl text-purple-800 mr-2"></i> FedEx Express</span>
-          <span class="flex items-center"><i class="fa-solid fa-ship text-lg text-blue-800 mr-2"></i> Jebel Ali Port (JAFZA)</span>
-          <span class="flex items-center"><i class="fa-solid fa-plane-departure text-lg text-slate-700 mr-2"></i> Dubai Air Cargo Hub</span>
+  <!-- 4. CONTINUOUS MOVING BRAND TICKER (EXACT MYUS STYLE FROM USER'S SCREENSHOT) -->
+  <div class="bg-white py-5 border-b border-slate-200 overflow-hidden select-none">
+    <div class="max-w-7xl mx-auto px-4 mb-3 text-center">
+      <p class="text-xs font-bold uppercase tracking-widest text-slate-500">
+        Wholesale Supply of Global Personal Care Brands & Logistics Partners
+      </p>
+    </div>
+
+    <!-- Moving Brand Carousel Strip (Continuous Infinite Loop) -->
+    <div class="marquee-container relative w-full overflow-hidden">
+      <!-- Gradient Fade Edges -->
+      <div class="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+      <div class="marquee-track-left py-1.5 items-center space-x-4">
+        
+        <!-- Track Items (Duplicated for seamless infinite loop) -->
+        <!-- DOVE -->
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-serif font-black text-lg text-slate-800 tracking-wider flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('dove')">
+          <i class="fa-solid fa-dove text-sky-600"></i>
+          <span>DOVE</span>
         </div>
+        <!-- NIVEA -->
+        <div class="px-6 py-2.5 bg-blue-900 hover:bg-blue-950 text-white rounded-xl font-sans font-black text-lg tracking-widest flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('nivea')">
+          <span>NIVEA</span>
+        </div>
+        <!-- AXE -->
+        <div class="px-6 py-2.5 bg-black hover:bg-neutral-900 text-amber-400 rounded-xl font-sans font-black text-lg tracking-wider flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('axe')">
+          <i class="fa-solid fa-fire text-amber-500"></i>
+          <span>AXE</span>
+        </div>
+        <!-- VASELINE -->
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-sans font-black text-lg text-blue-800 tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('vaseline')">
+          <span>VASELINE</span>
+        </div>
+        <!-- ST. IVES -->
+        <div class="px-6 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded-xl border border-emerald-200 font-serif font-bold text-lg tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('st_ives')">
+          <i class="fa-solid fa-leaf text-emerald-600"></i>
+          <span>ST. IVES</span>
+        </div>
+        <!-- PALMOLIVE -->
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-sans font-black text-lg text-emerald-800 tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('palmolive')">
+          <span>PALMOLIVE</span>
+        </div>
+        <!-- TRESEMMÉ -->
+        <div class="px-6 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-xl font-sans font-bold text-lg tracking-tight flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('tresemme')">
+          <span>TRESemmé</span>
+        </div>
+        <!-- REXONA -->
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-sans font-black text-lg text-slate-800 tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('rexona')">
+          <i class="fa-solid fa-check text-blue-600"></i>
+          <span>Rexona</span>
+        </div>
+        <!-- DHL -->
+        <div class="px-6 py-2.5 bg-amber-50 rounded-xl border border-amber-200 font-sans font-black text-lg text-red-600 flex items-center space-x-2 shadow-sm">
+          <span>DHL GLOBAL</span>
+        </div>
+        <!-- FEDEX -->
+        <div class="px-6 py-2.5 bg-slate-50 rounded-xl border border-slate-200 font-sans font-black text-lg text-purple-900 flex items-center space-x-2 shadow-sm">
+          <span>FedEx</span>
+        </div>
+
+        <!-- DUPLICATE SET FOR SEAMLESS 100% INFINITE LOOP -->
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-serif font-black text-lg text-slate-800 tracking-wider flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('dove')">
+          <i class="fa-solid fa-dove text-sky-600"></i>
+          <span>DOVE</span>
+        </div>
+        <div class="px-6 py-2.5 bg-blue-900 hover:bg-blue-950 text-white rounded-xl font-sans font-black text-lg tracking-widest flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('nivea')">
+          <span>NIVEA</span>
+        </div>
+        <div class="px-6 py-2.5 bg-black hover:bg-neutral-900 text-amber-400 rounded-xl font-sans font-black text-lg tracking-wider flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('axe')">
+          <i class="fa-solid fa-fire text-amber-500"></i>
+          <span>AXE</span>
+        </div>
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-sans font-black text-lg text-blue-800 tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('vaseline')">
+          <span>VASELINE</span>
+        </div>
+        <div class="px-6 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded-xl border border-emerald-200 font-serif font-bold text-lg tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('st_ives')">
+          <i class="fa-solid fa-leaf text-emerald-600"></i>
+          <span>ST. IVES</span>
+        </div>
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-sans font-black text-lg text-emerald-800 tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('palmolive')">
+          <span>PALMOLIVE</span>
+        </div>
+        <div class="px-6 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-xl font-sans font-bold text-lg tracking-tight flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('tresemme')">
+          <span>TRESemmé</span>
+        </div>
+        <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-sans font-black text-lg text-slate-800 tracking-wide flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('rexona')">
+          <i class="fa-solid fa-check text-blue-600"></i>
+          <span>Rexona</span>
+        </div>
+        <div class="px-6 py-2.5 bg-amber-50 rounded-xl border border-amber-200 font-sans font-black text-lg text-red-600 flex items-center space-x-2 shadow-sm">
+          <span>DHL GLOBAL</span>
+        </div>
+        <div class="px-6 py-2.5 bg-slate-50 rounded-xl border border-slate-200 font-sans font-black text-lg text-purple-900 flex items-center space-x-2 shadow-sm">
+          <span>FedEx</span>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- 5. VIP SECTION: D'VOLA PARIS AIR FRESHENER (MOVING / FLOATING AEROSOL ARENA) -->
-  <section id="vip-airfreshener" class="py-16 lg:py-24 bg-gradient-to-b from-[#0A142F] via-[#0D1C44] to-[#0A142F] text-white relative overflow-hidden">
+  <!-- 5. VIP SECTION: D'VOLA PARIS AIR FRESHENER (CONTINUOUS HORIZONTAL MOVING CONVEYOR BELT) -->
+  <!-- Designed specifically to fit completely within laptop screen height! -->
+  <section id="vip-airfreshener" class="py-10 lg:py-14 bg-gradient-to-b from-[#0A142F] via-[#0D1C44] to-[#0A142F] text-white relative overflow-hidden border-b border-slate-800">
     
-    <!-- Ambient Golden Glow in background -->
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none scent-aura"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-      
-      <!-- Section Header with VIP Badge -->
-      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <div class="inline-flex items-center space-x-2 px-4 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold tracking-wider uppercase">
-          <i class="fa-solid fa-crown text-amber-400 mr-1"></i>
-          <span>ROYAL AURA SIGNATURE VIP COLLECTION</span>
-        </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-white">
-          D'VOLA PARIS <span class="gold-gradient-text">Air Freshener Arena</span>
-        </h2>
-        <p class="text-sm sm:text-base text-slate-300">
-          Experience our flagship 300ml luxury room & ambiance aerosol sprays. Formulated with high-diffusion French fragrance oils for lasting elegance in homes, offices, and hotels.
-        </p>
+    <!-- Top Compact Header (Fits Screen) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 mb-6">
+      <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-[11px] font-bold tracking-wider uppercase mb-2">
+        <i class="fa-solid fa-crown text-amber-400 mr-1"></i>
+        <span>ROYAL AURA SIGNATURE VIP PRODUCT</span>
       </div>
-
-      <!-- Main Interactive 3D Showcase Stage -->
-      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          <!-- Left: Scent Details & Controls (5 cols) -->
-          <div class="lg:col-span-5 space-y-6 text-left order-2 lg:order-1">
-            
-            <div class="flex items-center space-x-3">
-              <span id="activeScentBadge" class="px-3 py-1 rounded-md text-xs font-bold bg-amber-400 text-slate-950 uppercase tracking-wider">
-                TOP SELLER
-              </span>
-              <span class="text-xs text-slate-400 font-medium">300ml &bull; 10.14 FL.OZ.</span>
-            </div>
-
-            <div>
-              <h3 id="activeScentTitle" class="text-3xl sm:text-4xl font-serif font-bold text-amber-300 leading-tight">
-                AZIZ — Imperial Gold
-              </h3>
-              <p id="activeScentSub" class="text-sm text-slate-300 mt-2 font-normal leading-relaxed">
-                A majestic Oriental amber and warm spice blend featuring royal Egyptian floral undertones. Rich, enduring, and aristocratic.
-              </p>
-            </div>
-
-            <!-- Fragrance Notes Breakdown -->
-            <div class="bg-white/5 rounded-2xl p-4 border border-white/10 space-y-2 text-xs">
-              <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                <span class="text-slate-400">Aroma Profile:</span>
-                <span id="activeScentProfile" class="text-amber-200 font-semibold">Warm Amber, Golden Spice, Precious Woods</span>
-              </div>
-              <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                <span class="text-slate-400">Aerosol Specs:</span>
-                <span class="text-slate-200 font-semibold">Dry Micro-Mist &bull; 0% Water Residue</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Wholesale Packaging:</span>
-                <span class="text-emerald-400 font-semibold">24 Cans / Master Carton &bull; Pallet: 72 Cartons</span>
-              </div>
-            </div>
-
-            <!-- Quick Scent Switcher Pills -->
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5">
-                Select Fragrance Variant:
-              </label>
-              <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 text-xs font-medium" id="scentPillsContainer">
-                <!-- Generated dynamically by JS -->
-              </div>
-            </div>
-
-            <!-- B2B Inquire Button for this specific scent -->
-            <div class="pt-3 flex flex-col sm:flex-row gap-3">
-              <button id="orderActiveScentBtn" class="flex-1 py-3.5 rounded-xl font-bold text-sm text-slate-950 gold-gradient-bg hover:opacity-90 transition shadow-lg flex items-center justify-center space-x-2">
-                <i class="fa-brands fa-whatsapp text-base"></i>
-                <span>Order Aziz Wholesale</span>
-              </button>
-              <a href="#b2b-calculator" class="px-5 py-3.5 rounded-xl font-semibold text-xs text-white bg-white/10 hover:bg-white/20 border border-white/20 transition flex items-center justify-center">
-                Calculate CBM
-              </a>
-            </div>
-
-          </div>
-
-          <!-- Center/Right: Interactive Moving / Floating Aerosol Can (7 cols) -->
-          <div class="lg:col-span-7 flex flex-col items-center justify-center relative order-1 lg:order-2 py-6">
-            
-            <!-- Radial Aura Circle Behind Can -->
-            <div id="canAuraCircle" class="absolute w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-amber-500/20 to-yellow-200/10 blur-2xl pointer-events-none transition-all duration-700"></div>
-
-            <!-- Floating Can Box with interactive 3D Mouse Tilt -->
-            <div class="can-tilt-box relative z-10 text-center cursor-pointer group" id="floatingCanWrapper">
-              <img 
-                id="activeCanImg" 
-                src="assets/air_freshener/dvola_aziz.jpg" 
-                alt="D'VOLA PARIS Aziz Air Freshener" 
-                class="floating-can max-h-[460px] sm:max-h-[520px] w-auto mx-auto object-contain rounded-2xl transition-all duration-500"
-              />
-
-              <!-- Floating Hint Badge -->
-              <div class="mt-4 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-black/40 border border-white/10 text-[11px] text-slate-300 backdrop-blur-md">
-                <i class="fa-solid fa-arrows-up-down-left-right text-amber-400"></i>
-                <span>Interactive 3D Motion &bull; Real 300ml Studio Can</span>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Thumbnails Grid of All 12 D'VOLA Fragrances -->
-      <div class="mt-12">
-        <div class="flex items-center justify-between mb-4">
-          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">
-            All 12 Available D'VOLA Paris Fragrances:
-          </h4>
-          <span class="text-xs text-amber-400">Click any can to load on stage</span>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5" id="dvolaAllGrid">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold tracking-tight text-white">
+        D'VOLA PARIS <span class="gold-gradient-text">300ml Moving Air Freshener Gallery</span>
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mt-1">
+        All 12 signature luxury room aerosols gliding continuously. 24 Cans / Master Carton &bull; Direct Dubai Export.
+      </p>
     </div>
+
+    <!-- THE CONTINUOUS HORIZONTAL MOVING STRIP OF AIR FRESHENERS -->
+    <div class="marquee-container relative w-full overflow-hidden py-2 select-none">
+      
+      <!-- Subtle side shadows -->
+      <div class="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-[#0A142F] to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-[#0A142F] to-transparent z-10 pointer-events-none"></div>
+
+      <!-- Moving Track (All 12 Cans) -->
+      <div class="marquee-track-left items-stretch space-x-4 px-4" id="movingCansTrack">
+        <!-- Injected dynamically by JS with all 12 cans + duplicates -->
+      </div>
+    </div>
+
+    <!-- Bottom Controls & Quick Specs Bar (Fits on Screen) -->
+    <div class="max-w-5xl mx-auto px-4 mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-300">
+      <div class="flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-emerald-300 font-semibold">Hover to pause continuous motion &bull; Click any can to order via WhatsApp</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="bg-white/10 px-3 py-1 rounded-md text-[11px] text-amber-300 font-bold border border-white/10">
+          300ml &bull; 10.14 FL.OZ.
+        </span>
+        <span class="bg-white/10 px-3 py-1 rounded-md text-[11px] text-slate-200 font-bold border border-white/10">
+          24 Cans / Master Carton
+        </span>
+        <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20bulk%20price%20for%20D'VOLA%20Air%20Fresheners" target="_blank" class="px-4 py-1.5 rounded-lg text-slate-950 font-bold text-xs gold-gradient-bg hover:opacity-90 transition flex items-center space-x-1 shadow">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>Order All 12 Fragrances</span>
+        </a>
+      </div>
+    </div>
+
   </section>
 
   <!-- 6. BRAND-WISE CATALOG (Client Requirement: Click Dove -> All Dove Products Open) -->
-  <section id="brand-catalog" class="py-16 lg:py-24 bg-white border-b border-slate-200">
+  <section id="brand-catalog" class="py-12 lg:py-16 bg-white border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Section Title & Subheading -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-slate-200 gap-4">
+      <!-- Section Title -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-slate-200 gap-3">
         <div>
-          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 border border-blue-200 text-royal-blue text-xs font-bold uppercase tracking-wider mb-2">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 border border-blue-200 text-royal-blue text-[11px] font-bold uppercase tracking-wider mb-1">
             <i class="fa-solid fa-layer-group text-royal-gold mr-1"></i>
             <span>Interactive Brand Filtering</span>
           </div>
-          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-royal-navy">
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-royal-navy">
             Wholesale Brand Directory
           </h2>
-          <p class="text-sm text-slate-500 mt-1 max-w-xl">
-            Select any international brand below to instantly view complete in-stock lines, export packaging, and carton quantities.
+          <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+            Click any brand below to instantly view all matching items, master cartons, and export specifications.
           </p>
         </div>
 
-        <!-- Quick Search / Filter stats -->
         <div class="text-right">
-          <span id="filterCountText" class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+          <span id="filterCountText" class="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
             Showing: All Brands
           </span>
         </div>
       </div>
 
-      <!-- INTERACTIVE BRAND SELECTOR TABS (Pills with Logos/Text) -->
-      <div class="flex items-center space-x-2.5 overflow-x-auto pb-4 mb-8 no-scrollbar" id="brandTabsBar">
+      <!-- INTERACTIVE BRAND SELECTOR TABS -->
+      <div class="flex items-center space-x-2 overflow-x-auto pb-3 mb-8 no-scrollbar" id="brandTabsBar">
         
-        <button class="brand-tab-btn active px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-royal-navy text-white shadow-md" data-brand="all">
+        <button class="brand-tab-btn active px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-royal-navy text-white shadow" data-brand="all">
           <i class="fa-solid fa-border-all mr-1.5"></i> All Brands
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="dove">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="dove">
           <i class="fa-solid fa-dove text-sky-600 mr-1.5"></i> DOVE
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="nivea">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="nivea">
           <span class="font-black text-blue-900 mr-1.5">N</span> NIVEA
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="axe">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="axe">
           <i class="fa-solid fa-fire text-amber-600 mr-1.5"></i> AXE
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="vaseline">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="vaseline">
           <i class="fa-solid fa-shield-halved text-blue-600 mr-1.5"></i> VASELINE
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="st_ives">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="st_ives">
           <i class="fa-solid fa-leaf text-emerald-600 mr-1.5"></i> ST. IVES
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="palmolive">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="palmolive">
           <i class="fa-solid fa-spa text-purple-600 mr-1.5"></i> PALMOLIVE
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="tresemme">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="tresemme">
           <i class="fa-solid fa-wand-magic-sparkles text-slate-800 mr-1.5"></i> TRESEMMÉ
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="rexona">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="rexona">
           <i class="fa-solid fa-check text-slate-700 mr-1.5"></i> REXONA
         </button>
 
-        <button class="brand-tab-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="fmcg_others">
+        <button class="brand-tab-btn px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 flex items-center" data-brand="fmcg_others">
           <i class="fa-solid fa-cubes text-slate-700 mr-1.5"></i> VEET / SIGNAL / DETTOL
         </button>
       </div>
 
-      <!-- PRODUCTS GRID (Populated with Real Studio Photos from User's Folder) -->
-      <div id="brandProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <!-- Injected dynamically by JS for smooth filtering -->
+      <!-- PRODUCTS GRID -->
+      <div id="brandProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <!-- Injected dynamically by JS -->
       </div>
 
     </div>
   </section>
 
   <!-- 7. DEDICATED BODY SPRAY & DEODORANT WHOLESALE ARENA -->
-  <section id="bodysprays" class="py-16 lg:py-24 bg-[#F1F5F9] border-b border-slate-200">
+  <section id="bodysprays" class="py-12 lg:py-16 bg-[#F1F5F9] border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
-        <span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-200 text-slate-800 uppercase tracking-wider">
+      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+        <span class="px-3 py-1 rounded-md text-[11px] font-bold bg-slate-200 text-slate-800 uppercase tracking-wider">
           Wholesale Body Spray Hub
         </span>
-        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-royal-navy">
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-royal-navy">
           Aerosol Deodorants & Body Sprays
         </h2>
-        <p class="text-sm text-slate-600">
-          High-velocity bulk supply of European and South African manufactured deodorant sprays. Standardized master cartons for secure palletizing and container stuffing.
+        <p class="text-xs sm:text-sm text-slate-600">
+          European and South African manufactured deodorant sprays in standardized master export cartons.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Axe Body Sprays Card -->
-        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition flex flex-col">
-          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[260px]">
-            <span class="absolute top-3 left-3 bg-black text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
+        <!-- Axe Card -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-lg transition flex flex-col">
+          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
+            <span class="absolute top-3 left-3 bg-black text-amber-400 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
               Made in South Africa 🇿🇦
             </span>
-            <img src="assets/axe/axe_bodysprays_collection.jpg" alt="Axe Body Sprays Range" class="max-h-56 object-contain hover:scale-105 transition-transform duration-300" />
+            <img src="assets/axe/axe_bodysprays_collection.jpg" alt="Axe Body Sprays Range" class="max-h-48 object-contain hover:scale-105 transition-transform" />
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
             <div>
               <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
-                <span>Brand: AXE / Unilever</span>
+                <span>Brand: AXE</span>
                 <span class="font-bold text-emerald-600">FCL / LCL Available</span>
               </div>
-              <h3 class="text-xl font-serif font-bold text-royal-navy">AXE 48H Non-Stop Fresh Collection</h3>
-              <p class="text-xs text-slate-600 mt-2">
+              <h3 class="text-lg font-serif font-bold text-royal-navy">AXE 48H Non-Stop Fresh Collection</h3>
+              <p class="text-xs text-slate-600 mt-1">
                 7 Variants: Dark Temptation, Musk, Apollo, Excite, Black, Wild Spice, Adrenalin.
               </p>
-              <div class="mt-3 bg-slate-50 rounded-xl p-3 text-xs space-y-1 text-slate-600 border border-slate-100">
-                <div class="flex justify-between"><span>Bottle Size:</span><strong class="text-slate-800">150ml Aerosol</strong></div>
+              <div class="mt-2.5 bg-slate-50 rounded-xl p-2.5 text-[11px] space-y-1 text-slate-600 border border-slate-100">
+                <div class="flex justify-between"><span>Size:</span><strong class="text-slate-800">150ml Aerosol</strong></div>
                 <div class="flex justify-between"><span>Master Carton:</span><strong class="text-slate-800">72 Cans / Carton</strong></div>
-                <div class="flex justify-between"><span>Pallet Capacity:</span><strong class="text-slate-800">48 Master Cartons</strong></div>
+                <div class="flex justify-between"><span>Pallet:</span><strong class="text-slate-800">48 Master Cartons</strong></div>
               </div>
             </div>
-            <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20AXE%20Body%20Sprays%20(150ml%20x%2072)" target="_blank" class="w-full py-3 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1.5">
+            <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20AXE%20Body%20Sprays%20(150ml%20x%2072)" target="_blank" class="w-full py-2.5 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1">
               <i class="fa-brands fa-whatsapp"></i>
               <span>Inquire Axe Carton Pricing</span>
             </a>
           </div>
         </div>
 
-        <!-- Nivea Deodorants Card -->
-        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition flex flex-col">
-          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[260px]">
-            <span class="absolute top-3 left-3 bg-blue-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
+        <!-- Nivea Card -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-lg transition flex flex-col">
+          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
+            <span class="absolute top-3 left-3 bg-blue-900 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
               Made in Germany 🇩🇪
             </span>
-            <img src="assets/nivea/nivea_deodorants_collection.jpg" alt="Nivea Deodorants Range" class="max-h-56 object-contain hover:scale-105 transition-transform duration-300" />
+            <img src="assets/nivea/nivea_deodorants_collection.jpg" alt="Nivea Deodorants Range" class="max-h-48 object-contain hover:scale-105 transition-transform" />
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
             <div>
               <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
-                <span>Brand: NIVEA / Beiersdorf</span>
+                <span>Brand: NIVEA</span>
                 <span class="font-bold text-emerald-600">In Stock Dubai</span>
               </div>
-              <h3 class="text-xl font-serif font-bold text-royal-navy">NIVEA Men & Women Deodorant Sprays</h3>
-              <p class="text-xs text-slate-600 mt-2">
-                18 Variants: Deep Dimension, Cool Kick, Black & White Invisible, Floral Paradise, Fresh Natural.
+              <h3 class="text-lg font-serif font-bold text-royal-navy">NIVEA Men & Women Deodorant Sprays</h3>
+              <p class="text-xs text-slate-600 mt-1">
+                18 Variants: Deep Dimension, Cool Kick, Black & White Invisible, Floral Paradise.
               </p>
-              <div class="mt-3 bg-slate-50 rounded-xl p-3 text-xs space-y-1 text-slate-600 border border-slate-100">
-                <div class="flex justify-between"><span>Bottle Size:</span><strong class="text-slate-800">150ml Aerosol</strong></div>
+              <div class="mt-2.5 bg-slate-50 rounded-xl p-2.5 text-[11px] space-y-1 text-slate-600 border border-slate-100">
+                <div class="flex justify-between"><span>Size:</span><strong class="text-slate-800">150ml Aerosol</strong></div>
                 <div class="flex justify-between"><span>Master Carton:</span><strong class="text-slate-800">30 Cans / Carton</strong></div>
                 <div class="flex justify-between"><span>Shelf Life:</span><strong class="text-slate-800">36 Months Fresh Batch</strong></div>
               </div>
             </div>
-            <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20NIVEA%20Deodorants%20(150ml%20x%2030)" target="_blank" class="w-full py-3 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1.5">
+            <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20NIVEA%20Deodorants%20(150ml%20x%2030)" target="_blank" class="w-full py-2.5 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1">
               <i class="fa-brands fa-whatsapp"></i>
               <span>Inquire Nivea Carton Pricing</span>
             </a>
           </div>
         </div>
 
-        <!-- Dove Deodorant Sprays Card -->
-        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition flex flex-col">
-          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[260px]">
-            <span class="absolute top-3 left-3 bg-sky-800 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
+        <!-- Dove Card -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-lg transition flex flex-col">
+          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
+            <span class="absolute top-3 left-3 bg-sky-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
               Made in Russia 🇷🇺
             </span>
-            <img src="assets/dove/dove_sprays_collection.jpg" alt="Dove Body Sprays Range" class="max-h-56 object-contain hover:scale-105 transition-transform duration-300" />
+            <img src="assets/dove/dove_sprays_collection.jpg" alt="Dove Body Sprays Range" class="max-h-48 object-contain hover:scale-105 transition-transform" />
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
             <div>
               <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
-                <span>Brand: DOVE / Unilever</span>
+                <span>Brand: DOVE</span>
                 <span class="font-bold text-emerald-600">Ready to Ship</span>
               </div>
-              <h3 class="text-xl font-serif font-bold text-royal-navy">DOVE Nourishing Secrets & Go Fresh</h3>
-              <p class="text-xs text-slate-600 mt-2">
-                Large 250ml size: Awakening Ritual, Restoring Ritual, Pear & Aloe, Sport Active+Fresh, Clean Comfort.
+              <h3 class="text-lg font-serif font-bold text-royal-navy">DOVE Nourishing Secrets & Go Fresh</h3>
+              <p class="text-xs text-slate-600 mt-1">
+                Jumbo 250ml: Awakening Ritual, Restoring Ritual, Pear & Aloe, Sport Active+Fresh.
               </p>
-              <div class="mt-3 bg-slate-50 rounded-xl p-3 text-xs space-y-1 text-slate-600 border border-slate-100">
-                <div class="flex justify-between"><span>Bottle Size:</span><strong class="text-slate-800">250ml (Jumbo Size)</strong></div>
+              <div class="mt-2.5 bg-slate-50 rounded-xl p-2.5 text-[11px] space-y-1 text-slate-600 border border-slate-100">
+                <div class="flex justify-between"><span>Size:</span><strong class="text-slate-800">250ml (Jumbo Size)</strong></div>
                 <div class="flex justify-between"><span>Master Carton:</span><strong class="text-slate-800">12 Cans / Carton</strong></div>
-                <div class="flex justify-between"><span>Moisturizer:</span><strong class="text-slate-800">1/4 Moisturizing Cream</strong></div>
+                <div class="flex justify-between"><span>Formula:</span><strong class="text-slate-800">1/4 Moisturizing Cream</strong></div>
               </div>
             </div>
-            <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20DOVE%20250ml%20Body%20Sprays" target="_blank" class="w-full py-3 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1.5">
+            <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20DOVE%20250ml%20Body%20Sprays" target="_blank" class="w-full py-2.5 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1">
               <i class="fa-brands fa-whatsapp"></i>
               <span>Inquire Dove Carton Pricing</span>
             </a>
@@ -679,49 +674,47 @@
   </section>
 
   <!-- 8. MYUS-STYLE B2B SHIPPING & CBM CALCULATOR -->
-  <section id="b2b-calculator" class="py-16 bg-white border-b border-slate-200">
+  <section id="b2b-calculator" class="py-12 bg-white border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="bg-royal-navy text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
+      <div class="bg-royal-navy text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+        
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          <div class="lg:col-span-6 space-y-4">
-            <span class="px-3 py-1 rounded-md text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 uppercase tracking-wider">
-              Logistics & Container Estimator
+          <div class="lg:col-span-6 space-y-3">
+            <span class="px-3 py-1 rounded-md text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 uppercase tracking-wider">
+              Container Estimator
             </span>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-white leading-tight">
-              Calculate Container Volume & FOB Jebel Ali Rates
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white leading-tight">
+              Container Volume & CBM Calculator
             </h2>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Input your desired products and carton volume to obtain an automated gross weight, CBM (Cubic Meters), and container stuffing estimate.
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Select product and carton volume to obtain automated gross weight, CBM (Cubic Meters), and container stuffing estimate.
             </p>
 
-            <div class="grid grid-cols-2 gap-4 pt-2">
-              <div class="bg-white/5 border border-white/10 rounded-xl p-3.5">
-                <div class="text-xs text-slate-400">20ft Container (FCL)</div>
-                <div class="text-lg font-bold text-amber-400 font-serif">~28 - 30 CBM</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Approx. 850 - 1,100 Cartons</div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="bg-white/5 border border-white/10 rounded-xl p-3">
+                <div class="text-[11px] text-slate-400">20ft Container (FCL)</div>
+                <div class="text-base font-bold text-amber-400 font-serif">~28 - 30 CBM</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Approx. 850 - 1,100 Cartons</div>
               </div>
-              <div class="bg-white/5 border border-white/10 rounded-xl p-3.5">
-                <div class="text-xs text-slate-400">40ft HQ Container</div>
-                <div class="text-lg font-bold text-amber-400 font-serif">~65 - 68 CBM</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Approx. 1,900 - 2,400 Cartons</div>
+              <div class="bg-white/5 border border-white/10 rounded-xl p-3">
+                <div class="text-[11px] text-slate-400">40ft HQ Container</div>
+                <div class="text-base font-bold text-amber-400 font-serif">~65 - 68 CBM</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Approx. 1,900 - 2,400 Cartons</div>
               </div>
             </div>
           </div>
 
-          <!-- Interactive Calculator Inputs -->
-          <div class="lg:col-span-6 bg-white text-slate-800 rounded-2xl p-6 sm:p-7 shadow-lg border border-slate-100">
-            <h3 class="font-serif font-bold text-lg text-royal-navy mb-4 pb-2 border-b border-slate-100 flex items-center justify-between">
-              <span>Volume & Weight Estimator</span>
+          <!-- Inputs -->
+          <div class="lg:col-span-6 bg-white text-slate-800 rounded-2xl p-5 sm:p-6 shadow border border-slate-100">
+            <h3 class="font-serif font-bold text-base text-royal-navy mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
+              <span>Order Volume Estimator</span>
               <i class="fa-solid fa-calculator text-royal-gold"></i>
             </h3>
 
-            <div class="space-y-3.5 text-xs">
+            <div class="space-y-3 text-xs">
               <div>
-                <label class="block font-semibold text-slate-700 mb-1">Selected Product Category</label>
+                <label class="block font-semibold text-slate-700 mb-1">Product</label>
                 <select id="calcProduct" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-royal-gold">
                   <option value="af" data-cbm="0.028" data-weight="8.2">D'VOLA Air Freshener 300ml (24 Cans/ctn &bull; 0.028 CBM)</option>
                   <option value="axe" data-cbm="0.042" data-weight="12.5">Axe Body Sprays 150ml (72 Cans/ctn &bull; 0.042 CBM)</option>
@@ -733,30 +726,29 @@
               </div>
 
               <div>
-                <label class="block font-semibold text-slate-700 mb-1">Order Quantity (Cartons)</label>
+                <label class="block font-semibold text-slate-700 mb-1">Carton Quantity</label>
                 <div class="flex items-center space-x-2">
                   <input type="range" id="calcCartonsRange" min="10" max="2000" step="10" value="250" class="flex-1 accent-amber-500" />
-                  <input type="number" id="calcCartonsNum" min="10" max="5000" value="250" class="w-24 px-3 py-1.5 border border-slate-200 rounded-lg text-center font-bold text-royal-navy text-sm" />
+                  <input type="number" id="calcCartonsNum" min="10" max="5000" value="250" class="w-20 px-2.5 py-1 border border-slate-200 rounded-lg text-center font-bold text-royal-navy text-xs" />
                 </div>
               </div>
 
-              <!-- Output Results Display -->
-              <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 grid grid-cols-3 gap-2 text-center">
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 grid grid-cols-3 gap-2 text-center">
                 <div>
                   <div class="text-[10px] text-slate-500 uppercase">Total CBM</div>
-                  <div id="outCbm" class="text-base font-bold text-royal-navy font-serif">7.00 m³</div>
+                  <div id="outCbm" class="text-sm font-bold text-royal-navy font-serif">7.00 m³</div>
                 </div>
                 <div>
-                  <div class="text-[10px] text-slate-500 uppercase">Est. Gross Wt.</div>
-                  <div id="outWeight" class="text-base font-bold text-royal-navy font-serif">2,050 kg</div>
+                  <div class="text-[10px] text-slate-500 uppercase">Est. Weight</div>
+                  <div id="outWeight" class="text-sm font-bold text-royal-navy font-serif">2,050 kg</div>
                 </div>
                 <div>
-                  <div class="text-[10px] text-slate-500 uppercase">Container Fit</div>
-                  <div id="outContainer" class="text-xs font-bold text-emerald-600 mt-1">LCL / ~24% of 20ft</div>
+                  <div class="text-[10px] text-slate-500 uppercase">Fit</div>
+                  <div id="outContainer" class="text-[11px] font-bold text-emerald-600 mt-0.5">LCL / ~24% 20ft</div>
                 </div>
               </div>
 
-              <button id="calcWhatsAppBtn" class="w-full py-3 rounded-lg text-white font-bold text-xs gold-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1.5 shadow-md">
+              <button id="calcWhatsAppBtn" class="w-full py-2.5 rounded-lg text-white font-bold text-xs gold-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1 shadow">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
                 <span>Send Quotation to WhatsApp</span>
               </button>
@@ -769,229 +761,188 @@
     </div>
   </section>
 
-  <!-- 9. FOOTER (MyUS Clean Format + Dubai Compliance) -->
-  <footer class="bg-royal-deep text-slate-400 text-xs py-14 border-t border-slate-800">
+  <!-- 9. FOOTER -->
+  <footer class="bg-royal-deep text-slate-400 text-xs py-10 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         
-        <!-- Col 1: About & Monogram (2 cols) -->
-        <div class="lg:col-span-2 space-y-4">
-          <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 rounded-lg navy-gradient-bg border border-royal-gold/40 flex items-center justify-center text-amber-400 font-serif font-bold text-base shadow">
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-lg navy-gradient-bg border border-royal-gold/40 flex items-center justify-center text-amber-400 font-serif font-bold text-sm shadow">
               RA
             </div>
-            <span class="font-serif text-lg font-bold text-white tracking-wide">ROYAL AURA</span>
+            <span class="font-serif text-base font-bold text-white tracking-wide">ROYAL AURA</span>
           </div>
-          <p class="text-slate-400 leading-relaxed pr-4 text-xs">
-            <strong class="text-white font-semibold">Royal Aura General Trading L.L.C.</strong> is an officially licensed commercial trading house registered in the Emirate of Dubai (DED). Specialists in FMCG distribution, luxury perfumery, aerosol body sprays, and room fragrances worldwide.
+          <p class="text-slate-400 text-xs leading-relaxed">
+            <strong class="text-white font-semibold">Royal Aura General Trading L.L.C.</strong> is a licensed Dubai commercial trading house (DED #982142) specializing in FMCG wholesale, fine fragrances, and D'VOLA Paris Air Fresheners.
           </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider">Dubai Office & Logistics</h4>
           <div class="text-xs text-slate-400 space-y-1">
-            <div><i class="fa-solid fa-location-dot text-amber-400 mr-1.5"></i> Deira / Jebel Ali Free Zone, Dubai, United Arab Emirates</div>
-            <div><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Tel: +971 4 234 5678 &bull; Mob: +971 50 123 4567</div>
+            <div><i class="fa-solid fa-location-dot text-amber-400 mr-1.5"></i> Deira / JAFZA, Dubai, UAE</div>
+            <div><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Tel: +971 4 234 5678</div>
             <div><i class="fa-solid fa-envelope text-amber-400 mr-1.5"></i> export@royalaura.ae</div>
           </div>
         </div>
 
-        <!-- Col 2: Brands -->
-        <div class="space-y-3">
-          <h4 class="text-white font-bold text-xs uppercase tracking-wider">FMCG Brands</h4>
-          <ul class="space-y-2 text-xs">
+        <div class="space-y-2">
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider">Top Brands</h4>
+          <ul class="space-y-1 text-xs">
+            <li><a href="#vip-airfreshener" class="hover:text-amber-400 transition">D'VOLA Paris Air Fresheners (300ml)</a></li>
             <li><a href="#brand-catalog" class="hover:text-amber-400 transition">Dove Men+Care & Sprays</a></li>
             <li><a href="#brand-catalog" class="hover:text-amber-400 transition">Nivea Deodorants (Germany)</a></li>
-            <li><a href="#brand-catalog" class="hover:text-amber-400 transition">Axe Body Sprays (150ml)</a></li>
-            <li><a href="#brand-catalog" class="hover:text-amber-400 transition">Vaseline Lip Therapy</a></li>
-            <li><a href="#brand-catalog" class="hover:text-amber-400 transition">St. Ives Body Lotions</a></li>
-            <li><a href="#brand-catalog" class="hover:text-amber-400 transition">Palmolive Shower Gel</a></li>
+            <li><a href="#brand-catalog" class="hover:text-amber-400 transition">Axe Body Sprays (150ml x 72)</a></li>
           </ul>
         </div>
 
-        <!-- Col 3: Signature Lines -->
-        <div class="space-y-3">
-          <h4 class="text-white font-bold text-xs uppercase tracking-wider">Signature Lines</h4>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#vip-airfreshener" class="hover:text-amber-400 transition">D'VOLA Paris Air Fresheners</a></li>
-            <li><a href="#vip-airfreshener" class="hover:text-amber-400 transition">Aziz Imperial Gold (300ml)</a></li>
-            <li><a href="#vip-airfreshener" class="hover:text-amber-400 transition">Dirham Arabian Silver (300ml)</a></li>
-            <li><a href="#vip-airfreshener" class="hover:text-amber-400 transition">Black Bakhoor Oud (300ml)</a></li>
-            <li><a href="#vip-airfreshener" class="hover:text-amber-400 transition">French Lavender & Jasmine</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 4: Trade & Export -->
-        <div class="space-y-3">
-          <h4 class="text-white font-bold text-xs uppercase tracking-wider">Logistics & Trade</h4>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#b2b-calculator" class="hover:text-amber-400 transition">Container CBM Calculator</a></li>
-            <li><a href="#" class="hover:text-amber-400 transition">JAFZA Customs Clearance</a></li>
-            <li><a href="#" class="hover:text-amber-400 transition">Certificate of Origin (COO)</a></li>
-            <li><a href="#" class="hover:text-amber-400 transition">FOB / CIF Shipping Terms</a></li>
-            <li><a href="#" class="hover:text-amber-400 transition">Palletized Shrink-Wrap Loading</a></li>
+        <div class="space-y-2">
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider">Export Services</h4>
+          <ul class="space-y-1 text-xs">
+            <li><span>FOB Jebel Ali & CIF Terms</span></li>
+            <li><span>Certificate of Origin (COO)</span></li>
+            <li><span>Palletized Shrink-Wrap Container Stuffing</span></li>
+            <li><span>Air Cargo & Ocean Freight</span></li>
           </ul>
         </div>
 
       </div>
 
-      <!-- Bottom Bar -->
-      <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-xs gap-4">
-        <div>
-          &copy; 2026 Royal Aura General Trading L.L.C. All Rights Reserved. Registered in UAE.
-        </div>
-        <div class="flex space-x-4">
-          <span class="hover:text-white cursor-pointer">Privacy Policy</span>
+      <div class="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-xs gap-3">
+        <div>&copy; 2026 Royal Aura General Trading L.L.C. Registered in UAE.</div>
+        <div class="flex space-x-3">
+          <span>Privacy Policy</span>
           <span>&bull;</span>
-          <span class="hover:text-white cursor-pointer">Terms of B2B Export</span>
+          <span>Terms of Trade</span>
           <span>&bull;</span>
-          <span class="hover:text-white cursor-pointer">Dubai Chamber Member</span>
+          <span>Dubai Chamber Verified</span>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- 10. JAVASCRIPT ENGINE (Interactive Brand Filter + Floating Can 3D Motion + Calculator) -->
+  <!-- 10. JAVASCRIPT ENGINE -->
   <script>
-    // DATA: 12 D'VOLA Paris Air Fresheners
+    // 12 D'VOLA PARIS AIR FRESHENERS DATA
     const DVOLA_SCENTS = [
       {
         id: 'aziz',
         name: 'AZIZ',
-        subtitle: 'Imperial Gold & Sphinx Edition',
+        subtitle: 'Imperial Gold & Sphinx',
+        tag: 'Warm Amber & Golden Spice',
         badge: 'Top Seller',
-        color: '#C59B27',
-        bgGradient: 'from-amber-500/20 to-yellow-200/10',
-        img: 'assets/air_freshener/dvola_aziz.jpg',
-        profile: 'Warm Amber, Golden Spice, Precious Woods',
-        desc: 'A majestic Oriental amber and warm spice blend featuring royal Egyptian floral undertones. Rich, enduring, and aristocratic.'
+        badgeColor: 'bg-amber-400 text-slate-950',
+        img: 'assets/air_freshener/dvola_aziz.jpg'
       },
       {
         id: 'dirham',
         name: 'DIRHAM',
-        subtitle: 'Silver Arabian Dallah Edition',
+        subtitle: 'Silver Arabian Dallah',
+        tag: 'Fresh Citrus & Cardamom',
         badge: 'Classic Heritage',
-        color: '#94A3B8',
-        bgGradient: 'from-slate-400/20 to-blue-200/10',
-        img: 'assets/air_freshener/dvola_dirham.jpg',
-        profile: 'Fresh Citrus, Cardamom, Lavender, Cedar',
-        desc: 'Inspired by traditional Emirati hospitality, blending sparkling fresh citrus with aromatic lavender and silver cardamom.'
+        badgeColor: 'bg-slate-200 text-slate-900',
+        img: 'assets/air_freshener/dvola_dirham.jpg'
       },
       {
         id: 'black_bakhoor',
         name: 'BLACK BAKHOOR',
-        subtitle: 'Smoky Oriental Incense',
+        subtitle: 'Smoky Oriental Oud',
+        tag: 'Aged Agarwood & Taif Rose',
         badge: 'Luxury Oud',
-        color: '#E11D48',
-        bgGradient: 'from-rose-600/20 to-amber-400/10',
-        img: 'assets/air_freshener/dvola_black_bakhoor.jpg',
-        profile: 'Aged Agarwood, Smoked Amber, Taif Rose',
-        desc: 'Intense, velvety Arabian bakhoor smoke infused with rich dark agarwood resin and royal Damask rose.'
+        badgeColor: 'bg-rose-500 text-white',
+        img: 'assets/air_freshener/dvola_black_bakhoor.jpg'
       },
       {
         id: 'black',
         name: 'BLACK',
-        subtitle: 'Noir Intense Fragrance',
+        subtitle: 'Noir Intense',
+        tag: 'Dark Leather & Patchouli',
         badge: 'Modern Noir',
-        color: '#475569',
-        bgGradient: 'from-slate-700/30 to-purple-400/10',
-        img: 'assets/air_freshener/dvola_black.jpg',
-        profile: 'Dark Leather, Patchouli, Crisp Bergamot',
-        desc: 'Sleek, powerful contemporary fragrance formulated with black patchouli and crisp night florals for executive spaces.'
+        badgeColor: 'bg-neutral-800 text-amber-400 border border-neutral-700',
+        img: 'assets/air_freshener/dvola_black.jpg'
       },
       {
         id: 'lavender',
         name: 'LAVENDER',
-        subtitle: 'French Provence Blossom',
+        subtitle: 'French Provence',
+        tag: 'Calming Lavender & Soft Musk',
         badge: 'Relaxation',
-        color: '#818CF8',
-        bgGradient: 'from-indigo-500/20 to-purple-300/10',
-        img: 'assets/air_freshener/dvola_lavender.jpg',
-        profile: 'French Lavender Buds, Vanilla, Soft Musk',
-        desc: 'Soothing natural French lavender oil delivering an immediate aura of tranquility and pure freshness.'
+        badgeColor: 'bg-indigo-500 text-white',
+        img: 'assets/air_freshener/dvola_lavender.jpg'
       },
       {
         id: 'jasmine',
         name: 'JASMINE',
-        subtitle: 'Night Blooming Royal Jasmine',
+        subtitle: 'Night Blooming Royal',
+        tag: 'Pure White Dew Petals',
         badge: 'Floral Pure',
-        color: '#10B981',
-        bgGradient: 'from-emerald-500/20 to-teal-200/10',
-        img: 'assets/air_freshener/dvola_jasmine.jpg',
-        profile: 'White Jasmine Petals, Orange Blossom, Green Leaves',
-        desc: 'Lush blooming white jasmine captured at peak dew, providing a radiant floral atmosphere.'
+        badgeColor: 'bg-emerald-500 text-white',
+        img: 'assets/air_freshener/dvola_jasmine.jpg'
       },
       {
         id: 'sandal',
         name: 'SANDAL',
-        subtitle: 'Precious Sandalwood & Amber',
+        subtitle: 'Precious Mysore Sandal',
+        tag: 'Creamy Sandalwood & Amber',
         badge: 'Aristocratic',
-        color: '#B45309',
-        bgGradient: 'from-amber-700/20 to-yellow-500/10',
-        img: 'assets/air_freshener/dvola_sandal.jpg',
-        profile: 'Mysore Sandalwood, Golden Ambergris, Creamy Vanilla',
-        desc: 'Earthy, comforting creamy sandalwood notes ground this timeless room fragrance with enduring luxury.'
+        badgeColor: 'bg-amber-700 text-white',
+        img: 'assets/air_freshener/dvola_sandal.jpg'
       },
       {
         id: 'strawberry',
         name: 'STRAWBERRY',
         subtitle: 'Sweet Summer Nectar',
+        tag: 'Sun-Ripened Wild Berries',
         badge: 'Fruity Sweet',
-        color: '#EF4444',
-        bgGradient: 'from-red-500/20 to-pink-300/10',
-        img: 'assets/air_freshener/dvola_strawberry.jpg',
-        profile: 'Wild Strawberries, Red Berries, Sugar Cane',
-        desc: 'Vibrant sun-ripened summer strawberries bursting with joyful sweetness and lively uplifting energy.'
+        badgeColor: 'bg-red-500 text-white',
+        img: 'assets/air_freshener/dvola_strawberry.jpg'
       },
       {
         id: 'yuri',
         name: 'YURI',
-        subtitle: 'White Lily & Lily of the Valley',
+        subtitle: 'Exotic White Lily',
+        tag: 'Casa Blanca Lily & Dew',
         badge: 'Exotic Bloom',
-        color: '#14B8A6',
-        bgGradient: 'from-teal-500/20 to-emerald-200/10',
-        img: 'assets/air_freshener/dvola_yuri.jpg',
-        profile: 'Casa Blanca Lily, Fresh Dew, White Woods',
-        desc: 'Crisp Asian floral elegance centered on exotic white lilies and delicate morning mist accords.'
+        badgeColor: 'bg-teal-500 text-white',
+        img: 'assets/air_freshener/dvola_yuri.jpg'
       },
       {
         id: 'sabaya',
         name: 'SABAYA',
         subtitle: 'Romantic Arabian Rose',
+        tag: 'Damask Rose & Sweet Peach',
         badge: 'Delicate Rose',
-        color: '#F43F5E',
-        bgGradient: 'from-rose-500/20 to-pink-200/10',
-        img: 'assets/air_freshener/dvola_sabaya.jpg',
-        profile: 'Pink Rosebuds, Peach Nectar, White Musk',
-        desc: 'Soft, powdery rose garden romance with subtle sweet peach and clean Egyptian musk.'
+        badgeColor: 'bg-pink-500 text-white',
+        img: 'assets/air_freshener/dvola_sabaya.jpg'
       },
       {
         id: 'floral_lemon',
         name: 'FLORAL LEMON',
-        subtitle: 'Zesty Citrus & Garden Bloom',
+        subtitle: 'Sicilian Citrus Zest',
+        tag: 'Invigorating Lemon & Blooms',
         badge: 'Citrus Boost',
-        color: '#EAB308',
-        bgGradient: 'from-yellow-400/20 to-amber-200/10',
-        img: 'assets/air_freshener/dvola_floral_lemon.jpg',
-        profile: 'Sicilian Lemon Zest, Verbena, Neroli',
-        desc: 'Invigorating Sicilian lemon zest paired with garden florals to immediately neutralize kitchen or smoke odors.'
+        badgeColor: 'bg-yellow-400 text-slate-950',
+        img: 'assets/air_freshener/dvola_floral_lemon.jpg'
       },
       {
         id: 'strawberry_edition',
-        name: 'STRAWBERRY SPECIAL',
-        subtitle: 'Reserve Berry Blend',
-        badge: 'Special Edition',
-        color: '#F87171',
-        bgGradient: 'from-rose-500/20 to-red-300/10',
-        img: 'assets/air_freshener/dvola_strawberry_edition.jpg',
-        profile: 'Glazed Berries, Strawberry Cream, Vanilla',
-        desc: 'Special edition formulation with enhanced lingering power and sweet gourmet berry top notes.'
+        name: 'STRAWBERRY RESERVE',
+        subtitle: 'Special Edition Blend',
+        tag: 'Glazed Berries & Cream',
+        badge: 'Special Reserve',
+        badgeColor: 'bg-rose-400 text-slate-950',
+        img: 'assets/air_freshener/dvola_strawberry_edition.jpg'
       }
     ];
 
-    // DATA: FMCG Brand Products (Real Studio Photos from User's Folder)
+    // FMCG BRAND PRODUCTS DATA
     const BRAND_PRODUCTS = [
       // DOVE
       {
         brand: 'dove',
         title: 'Dove Men+Care Body & Face Wash (400ml)',
-        desc: '24HR Nourishing MicroMoisture. Sulfate Free. Charcoal + Clay Purifying & Refreshing Extra Fresh.',
+        desc: '24HR Nourishing MicroMoisture. Sulfate Free. Charcoal + Clay & Extra Fresh.',
         pack: '13.5 FL.OZ / 400ml &bull; 12 Pcs / Ctn',
         origin: 'Made in USA / EU',
         badge: 'Dove Men+Care',
@@ -1008,8 +959,8 @@
       },
       {
         brand: 'dove',
-        title: 'Dove 250ml Body Sprays & Deodorants',
-        desc: 'Nourishing Secrets (Awakening & Restoring Ritual), Go Fresh (Pear, Pomegranate, Cucumber), Invisible Care.',
+        title: 'Dove 250ml Jumbo Body Sprays & Deodorants',
+        desc: 'Nourishing Secrets (Awakening & Restoring Ritual), Go Fresh (Pear, Pomegranate, Cucumber).',
         pack: '250ml &bull; 12 Cans / Ctn &bull; 1/4 Moisturizing Cream',
         origin: 'Made in Russia 🇷🇺',
         badge: 'Wholesale Sprays',
@@ -1082,7 +1033,7 @@
       {
         brand: 'st_ives',
         title: 'St. Ives 621ml Jumbo Body Lotions',
-        desc: 'Softening (Coconut & Orchid) and Renewing (Collagen & Elastin). 100% Daily Hydration with plant-derived moisturizers.',
+        desc: 'Softening (Coconut & Orchid) and Renewing (Collagen & Elastin). 100% Daily Hydration.',
         pack: '21 FL.OZ / 621ml &bull; 12 Bottles / Ctn',
         origin: 'Made in USA / Unilever',
         badge: 'Body Care',
@@ -1093,7 +1044,7 @@
       {
         brand: 'palmolive',
         title: 'Palmolive Gourmet Spa Shower Cream',
-        desc: 'Blackberry Mousse with Tantalizing Blackberry & Coconut Milk with Exotic Coconut. Indulgent Shower Cream.',
+        desc: 'Blackberry Mousse with Tantalizing Blackberry & Coconut Milk with Exotic Coconut.',
         pack: '500ml &bull; 12 Bottles / Ctn',
         origin: 'Colgate-Palmolive',
         badge: 'Shower Care',
@@ -1150,119 +1101,82 @@
       }
     ];
 
-    // INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
-      initAirFreshenerArena();
+      buildMovingAirFreshenerTrack();
       initBrandCatalog();
       initCalculator();
-      initCan3DMovement();
       initMobileMenu();
     });
 
-    // 1. AIR FRESHENER ARENA LOGIC
-    function initAirFreshenerArena() {
-      const pillsContainer = document.getElementById('scentPillsContainer');
-      const allGrid = document.getElementById('dvolaAllGrid');
+    // 1. BUILD CONTINUOUS MOVING AIR FRESHENER MARQUEE
+    function buildMovingAirFreshenerTrack() {
+      const track = document.getElementById('movingCansTrack');
+      if (!track) return;
 
-      // Populate scent selector pills
-      pillsContainer.innerHTML = DVOLA_SCENTS.map((s, idx) => `
-        <button 
-          onclick="switchScent('${s.id}')" 
-          class="scent-pill-btn px-2.5 py-2 rounded-lg text-left truncate transition-all border ${idx === 0 ? 'bg-amber-400 text-slate-950 font-bold border-amber-300' : 'bg-white/5 text-slate-300 hover:bg-white/10 border-white/10'}"
-          data-scent="${s.id}">
-          ${s.name}
-        </button>
-      `).join('');
+      // Duplicate list so animation seamlessly loops 100% without gaps
+      const doubleList = [...DVOLA_SCENTS, ...DVOLA_SCENTS];
 
-      // Populate thumbnail grid of all 12 cans
-      allGrid.innerHTML = DVOLA_SCENTS.map(s => `
-        <div 
-          onclick="switchScent('${s.id}')" 
-          class="group cursor-pointer bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/10 hover:border-amber-400/50 transition-all text-center flex flex-col justify-between">
-          <div class="h-40 flex items-center justify-center overflow-hidden mb-2">
-            <img src="${s.img}" alt="${s.name}" class="max-h-36 object-contain group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300" />
+      track.innerHTML = doubleList.map(s => `
+        <div class="hover-can w-64 sm:w-72 flex-shrink-0 bg-white/5 hover:bg-white/10 rounded-2xl p-4 border border-white/10 hover:border-amber-400/50 transition-all flex flex-col justify-between group cursor-pointer shadow-lg" onclick="orderScent('${s.name}')">
+          
+          <!-- Top Badge -->
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${s.badgeColor}">
+              ${s.badge}
+            </span>
+            <span class="text-[10px] text-slate-400 font-semibold">
+              300ml
+            </span>
           </div>
-          <div>
-            <div class="text-xs font-bold text-amber-300 group-hover:text-amber-200">${s.name}</div>
-            <div class="text-[10px] text-slate-400 truncate">${s.badge}</div>
+
+          <!-- Can Image (Compact screen-fitting height: max 190px) -->
+          <div class="h-44 sm:h-48 flex items-center justify-center my-1 overflow-hidden">
+            <img src="${s.img}" alt="${s.name}" class="max-h-40 sm:max-h-44 w-auto object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)]" />
           </div>
+
+          <!-- Details -->
+          <div class="text-center mt-2 space-y-1">
+            <h3 class="font-serif font-bold text-base text-amber-300 group-hover:text-amber-200">
+              ${s.name}
+            </h3>
+            <div class="text-[11px] text-slate-300 font-medium truncate">
+              ${s.subtitle}
+            </div>
+            <div class="text-[10px] text-slate-400 truncate">
+              ${s.tag}
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <div class="mt-3 pt-2 border-t border-white/10">
+            <button class="w-full py-1.5 rounded-lg text-slate-950 font-bold text-[11px] gold-gradient-bg group-hover:opacity-95 transition flex items-center justify-center space-x-1 shadow">
+              <i class="fa-brands fa-whatsapp text-xs"></i>
+              <span>Order ${s.name}</span>
+            </button>
+          </div>
+
         </div>
       `).join('');
-
-      // Setup Inquire button for active scent
-      document.getElementById('orderActiveScentBtn').addEventListener('click', () => {
-        const title = document.getElementById('activeScentTitle').innerText;
-        const url = `https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20wholesale%20quote%20for%20D'VOLA%20Paris%20Air%20Freshener%20-%20${encodeURIComponent(title)}`;
-        window.open(url, '_blank');
-      });
     }
 
-    // Switch active D'VOLA scent on stage
-    window.switchScent = function(scentId) {
-      const scent = DVOLA_SCENTS.find(s => s.id === scentId);
-      if (!scent) return;
-
-      // Update text
-      document.getElementById('activeScentBadge').innerText = scent.badge;
-      document.getElementById('activeScentTitle').innerText = `${scent.name} — ${scent.subtitle}`;
-      document.getElementById('activeScentSub').innerText = scent.desc;
-      document.getElementById('activeScentProfile').innerText = scent.profile;
-
-      // Smoothly cross-fade image
-      const img = document.getElementById('activeCanImg');
-      img.style.opacity = '0.2';
-      img.style.transform = 'scale(0.92) translateY(10px)';
-
-      setTimeout(() => {
-        img.src = scent.img;
-        img.alt = `D'VOLA PARIS ${scent.name} Air Freshener`;
-        img.style.opacity = '1';
-        img.style.transform = '';
-      }, 200);
-
-      // Update aura background
-      const aura = document.getElementById('canAuraCircle');
-      aura.className = `absolute w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr ${scent.bgGradient} blur-2xl pointer-events-none transition-all duration-700`;
-
-      // Update active pill button style
-      document.querySelectorAll('.scent-pill-btn').forEach(btn => {
-        if (btn.getAttribute('data-scent') === scentId) {
-          btn.className = 'scent-pill-btn px-2.5 py-2 rounded-lg text-left truncate transition-all border bg-amber-400 text-slate-950 font-bold border-amber-300';
-        } else {
-          btn.className = 'scent-pill-btn px-2.5 py-2 rounded-lg text-left truncate transition-all border bg-white/5 text-slate-300 hover:bg-white/10 border-white/10';
-        }
-      });
+    window.orderScent = function(name) {
+      const msg = `Hello Royal Aura Trading, I want wholesale quotation for D'VOLA Paris Air Freshener - ${encodeURIComponent(name)} (300ml, 24 cans/ctn).`;
+      window.open(`https://wa.me/971501234567?text=${msg}`, '_blank');
     };
 
-    // 2. INTERACTIVE 3D PERSPECTIVE MOUSE TILT FOR AEROSOL CAN
-    function initCan3DMovement() {
-      const wrapper = document.getElementById('floatingCanWrapper');
-      const can = document.getElementById('activeCanImg');
-      if (!wrapper || !can) return;
+    window.filterAndScroll = function(brandKey) {
+      const btn = document.querySelector(`.brand-tab-btn[data-brand="${brandKey}"]`);
+      if (btn) btn.click();
+      const el = document.getElementById('brand-catalog');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    };
 
-      wrapper.addEventListener('mousemove', (e) => {
-        const rect = wrapper.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        const rotY = (x / (rect.width / 2)) * 12; // tilt max 12 deg
-        const rotX = -(y / (rect.height / 2)) * 12;
-
-        can.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
-      });
-
-      wrapper.addEventListener('mouseleave', () => {
-        can.style.transform = '';
-      });
-    }
-
-    // 3. BRAND CATALOG FILTERING LOGIC
+    // 2. BRAND CATALOG FILTERING LOGIC
     function initBrandCatalog() {
       const grid = document.getElementById('brandProductsGrid');
       const tabs = document.querySelectorAll('.brand-tab-btn');
       const countText = document.getElementById('filterCountText');
 
-      // Render products function
       function renderProducts(filterBrand) {
         let filtered = BRAND_PRODUCTS;
         if (filterBrand !== 'all') {
@@ -1274,42 +1188,38 @@
         grid.innerHTML = filtered.map(p => `
           <div class="product-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
             
-            <!-- Image Area -->
-            <div class="card-img-wrap bg-slate-50 p-6 flex items-center justify-center min-h-[240px] relative border-b border-slate-100">
-              <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white border border-slate-200 text-royal-navy shadow-sm">
+            <div class="bg-slate-50 p-4 flex items-center justify-center min-h-[200px] relative border-b border-slate-100">
+              <span class="absolute top-3 left-3 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white border border-slate-200 text-royal-navy shadow-sm">
                 ${p.badge}
               </span>
               <span class="absolute top-3 right-3 text-[10px] font-semibold text-slate-500">
                 ${p.origin}
               </span>
-              <img src="${p.img}" alt="${p.title}" class="max-h-48 w-auto object-contain" loading="lazy" />
+              <img src="${p.img}" alt="${p.title}" class="max-h-40 w-auto object-contain" loading="lazy" />
             </div>
 
-            <!-- Content Area -->
-            <div class="p-5 flex-1 flex flex-col justify-between space-y-3.5">
+            <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
               <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-royal-gold">
-                  ${p.brand.toUpperCase()} &bull; WHOLESALE EXPORT
+                <span class="text-[9px] font-bold uppercase tracking-wider text-royal-gold">
+                  ${p.brand.toUpperCase()} &bull; WHOLESALE
                 </span>
-                <h4 class="text-base font-serif font-bold text-royal-navy leading-snug mt-1">
+                <h4 class="text-sm font-serif font-bold text-royal-navy leading-snug mt-1">
                   ${p.title}
                 </h4>
-                <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
                   ${p.desc}
                 </p>
               </div>
 
-              <!-- Packaging Specs -->
-              <div class="bg-slate-50 rounded-lg px-3 py-2 text-[11px] font-medium text-slate-700 border border-slate-100 flex items-center justify-between">
-                <span class="text-slate-500">Packaging:</span>
+              <div class="bg-slate-50 rounded-lg px-2.5 py-1.5 text-[10px] font-medium text-slate-700 border border-slate-100 flex items-center justify-between">
+                <span class="text-slate-500">Packing:</span>
                 <span class="font-semibold text-royal-navy">${p.pack}</span>
               </div>
 
-              <!-- Action Button -->
               <a 
                 href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20quote%20for%20${encodeURIComponent(p.title)}" 
                 target="_blank" 
-                class="w-full py-2.5 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1.5 shadow-sm">
+                class="w-full py-2 rounded-lg text-center font-bold text-xs text-white navy-gradient-bg hover:opacity-90 transition flex items-center justify-center space-x-1.5 shadow-sm">
                 <i class="fa-brands fa-whatsapp text-emerald-400"></i>
                 <span>Inquire B2B Pricing</span>
               </a>
@@ -1319,27 +1229,25 @@
         `).join('');
       }
 
-      // Tab click events
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
           tabs.forEach(t => {
-            t.classList.remove('bg-royal-navy', 'text-white', 'shadow-md');
+            t.classList.remove('bg-royal-navy', 'text-white', 'shadow');
             t.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
           });
 
           tab.classList.remove('bg-slate-100', 'text-slate-700', 'border-slate-200');
-          tab.classList.add('bg-royal-navy', 'text-white', 'shadow-md');
+          tab.classList.add('bg-royal-navy', 'text-white', 'shadow');
 
           const brand = tab.getAttribute('data-brand');
           renderProducts(brand);
         });
       });
 
-      // Initial Render All
       renderProducts('all');
     }
 
-    // 4. B2B CONTAINER & CBM CALCULATOR LOGIC
+    // 3. B2B CONTAINER & CBM CALCULATOR LOGIC
     function initCalculator() {
       const selProduct = document.getElementById('calcProduct');
       const rngCartons = document.getElementById('calcCartonsRange');
@@ -1361,19 +1269,18 @@
         outCbm.innerText = `${totalCbm} m³`;
         outWeight.innerText = `${totalWt} kg`;
 
-        // Container fit logic
         if (totalCbm <= 8) {
-          outContainer.innerText = `LCL Shipment (~${Math.round((totalCbm/29)*100)}% of 20ft)`;
-          outContainer.className = 'text-xs font-bold text-blue-600 mt-1';
+          outContainer.innerText = `LCL (~${Math.round((totalCbm/29)*100)}% 20ft)`;
+          outContainer.className = 'text-[11px] font-bold text-blue-600 mt-0.5';
         } else if (totalCbm <= 29) {
           outContainer.innerText = `20ft Container (~${Math.round((totalCbm/29)*100)}% Full)`;
-          outContainer.className = 'text-xs font-bold text-emerald-600 mt-1';
+          outContainer.className = 'text-[11px] font-bold text-emerald-600 mt-0.5';
         } else if (totalCbm <= 67) {
-          outContainer.innerText = `40ft HQ Container (~${Math.round((totalCbm/67)*100)}% Full)`;
-          outContainer.className = 'text-xs font-bold text-purple-600 mt-1';
+          outContainer.innerText = `40ft HQ (~${Math.round((totalCbm/67)*100)}% Full)`;
+          outContainer.className = 'text-[11px] font-bold text-purple-600 mt-0.5';
         } else {
-          outContainer.innerText = `Multiple Containers (${(totalCbm/67).toFixed(1)} x 40ft HQ)`;
-          outContainer.className = 'text-xs font-bold text-amber-600 mt-1';
+          outContainer.innerText = `Multi-Containers (${(totalCbm/67).toFixed(1)} x 40ft HQ)`;
+          outContainer.className = 'text-[11px] font-bold text-amber-600 mt-0.5';
         }
       }
 
@@ -1394,11 +1301,10 @@
         const qty = numCartons.value;
         const cbm = outCbm.innerText;
         const wt = outWeight.innerText;
-        const msg = `Hello Royal Aura Trading,%0A%0AI want a freight quote for:%0A- Product: ${encodeURIComponent(prod)}%0A- Volume: ${qty} Cartons%0A- Total CBM: ${cbm}%0A- Estimated Gross Weight: ${wt}%0A%0APlease provide FOB Jebel Ali / CIF rates.`;
+        const msg = `Hello Royal Aura Trading,%0A%0AFreight quote inquiry:%0A- Product: ${encodeURIComponent(prod)}%0A- Quantity: ${qty} Cartons%0A- Total CBM: ${cbm}%0A- Gross Weight: ${wt}%0A%0APlease provide FOB Jebel Ali / CIF rates.`;
         window.open(`https://wa.me/971501234567?text=${msg}`, '_blank');
       });
 
-      // Quick Hero RFQ Form
       const heroForm = document.getElementById('heroRfqForm');
       if (heroForm) {
         heroForm.addEventListener('submit', (e) => {
@@ -1407,7 +1313,7 @@
           const vol = document.getElementById('heroVolume').value;
           const dest = document.getElementById('heroDestination').value;
           const phone = document.getElementById('heroPhone').value;
-          const msg = `Hello Royal Aura Trading,%0A%0AQuick B2B RFQ Inquiry:%0A- Category: ${encodeURIComponent(cat)}%0A- Order Volume: ${encodeURIComponent(vol)}%0A- Destination Country: ${encodeURIComponent(dest)}%0A- Contact Phone: ${encodeURIComponent(phone)}%0A%0APlease send catalog and container quotation.`;
+          const msg = `Hello Royal Aura Trading,%0A%0AB2B RFQ Inquiry:%0A- Product: ${encodeURIComponent(cat)}%0A- Volume: ${encodeURIComponent(vol)}%0A- Destination: ${encodeURIComponent(dest)}%0A- Phone: ${encodeURIComponent(phone)}%0A%0APlease send catalog and quotation.`;
           window.open(`https://wa.me/971501234567?text=${msg}`, '_blank');
         });
       }
@@ -1415,7 +1321,6 @@
       updateCalc();
     }
 
-    // 5. MOBILE MENU DRAWER TOGGLE
     function initMobileMenu() {
       const btn = document.getElementById('mobileMenuBtn');
       const drawer = document.getElementById('mobileDrawer');
