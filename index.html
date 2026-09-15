@@ -64,36 +64,43 @@
       100% { transform: translateX(-50%); }
     }
 
-    @keyframes marqueeRight {
-      0% { transform: translateX(-50%); }
-      100% { transform: translateX(0%); }
-    }
-
     .marquee-track-left {
       display: flex;
       width: max-content;
-      animation: marqueeLeft 36s linear infinite;
+      animation: marqueeLeft 38s linear infinite;
     }
 
-    .marquee-track-right {
-      display: flex;
-      width: max-content;
-      animation: marqueeRight 40s linear infinite;
-    }
-
-    .marquee-container:hover .marquee-track-left,
-    .marquee-container:hover .marquee-track-right {
+    .marquee-container:hover .marquee-track-left {
       animation-play-state: paused;
     }
 
-    /* Can Floating Subtle Physics */
-    @keyframes subtleHover {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    /* REAL 3D FLOATING WAVE ANIMATION FOR AEROSOL CANS */
+    @keyframes floatWave {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-12px) rotate(1.2deg);
+      }
     }
-    .hover-can:hover {
-      animation: subtleHover 2s ease-in-out infinite;
+
+    .floating-can {
+      animation: floatWave 4s ease-in-out infinite;
+      filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.65)) drop-shadow(0 4px 6px rgba(197, 155, 39, 0.2));
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
+
+    .floating-can:hover {
+      transform: translateY(-18px) scale(1.08) !important;
+      filter: drop-shadow(0 25px 30px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(223, 183, 67, 0.45));
+    }
+
+    /* Staggered Floating Delays */
+    .delay-1 { animation-delay: -0.6s; }
+    .delay-2 { animation-delay: -1.3s; }
+    .delay-3 { animation-delay: -2.0s; }
+    .delay-4 { animation-delay: -2.7s; }
+    .delay-5 { animation-delay: -3.4s; }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 7px; height: 7px; }
@@ -110,7 +117,7 @@
     }
     .product-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 16px 25px -8px rgba(10, 20, 47, 0.12), 0 0 0 1px rgba(197, 155, 39, 0.25);
+      box-shadow: 0 18px 28px -10px rgba(10, 20, 47, 0.12), 0 0 0 1px rgba(197, 155, 39, 0.25);
     }
   </style>
 </head>
@@ -196,7 +203,7 @@
     <!-- Mobile Drawer -->
     <div id="mobileDrawer" class="lg:hidden hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3">
       <a href="#vip-airfreshener" class="block py-2 text-sm font-bold text-royal-navy border-b border-slate-100">
-        🌟 D'VOLA Air Fresheners (Moving VIP)
+        🌟 D'VOLA Air Fresheners (Floating VIP)
       </a>
       <a href="#brand-catalog" class="block py-2 text-sm font-medium text-slate-700 border-b border-slate-100">
         🏢 Global Brands (Dove, Axe, Nivea...)
@@ -237,7 +244,7 @@
 
           <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
             <a href="#vip-airfreshener" class="w-full sm:w-auto px-6 py-3 rounded-xl text-white font-bold text-xs gold-gradient-bg shadow-md hover:shadow-lg transition flex items-center justify-center space-x-2">
-              <span>View Moving Air Freshener Gallery</span>
+              <span>View Floating Air Freshener Gallery</span>
               <i class="fa-solid fa-arrow-down text-xs"></i>
             </a>
             <a href="#brand-catalog" class="w-full sm:w-auto px-6 py-3 rounded-xl text-royal-navy font-bold text-xs bg-white hover:bg-slate-50 border border-slate-300 shadow-sm transition flex items-center justify-center space-x-2">
@@ -332,15 +339,13 @@
       </p>
     </div>
 
-    <!-- Moving Brand Carousel Strip (Continuous Infinite Loop) -->
+    <!-- Moving Brand Carousel Strip -->
     <div class="marquee-container relative w-full overflow-hidden">
-      <!-- Gradient Fade Edges -->
       <div class="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
       <div class="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
       <div class="marquee-track-left py-1.5 items-center space-x-4">
         
-        <!-- Track Items (Duplicated for seamless infinite loop) -->
         <!-- DOVE -->
         <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-serif font-black text-lg text-slate-800 tracking-wider flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('dove')">
           <i class="fa-solid fa-dove text-sky-600"></i>
@@ -386,7 +391,7 @@
           <span>FedEx</span>
         </div>
 
-        <!-- DUPLICATE SET FOR SEAMLESS 100% INFINITE LOOP -->
+        <!-- DUPLICATE SET FOR INFINITE LOOP -->
         <div class="px-6 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 font-serif font-black text-lg text-slate-800 tracking-wider flex items-center space-x-2 cursor-pointer shadow-sm" onclick="filterAndScroll('dove')">
           <i class="fa-solid fa-dove text-sky-600"></i>
           <span>DOVE</span>
@@ -426,51 +431,51 @@
     </div>
   </div>
 
-  <!-- 5. VIP SECTION: D'VOLA PARIS AIR FRESHENER (CONTINUOUS HORIZONTAL MOVING CONVEYOR BELT) -->
-  <!-- Designed specifically to fit completely within laptop screen height! -->
-  <section id="vip-airfreshener" class="py-10 lg:py-14 bg-gradient-to-b from-[#0A142F] via-[#0D1C44] to-[#0A142F] text-white relative overflow-hidden border-b border-slate-800">
+  <!-- 5. VIP SECTION: D'VOLA PARIS AIR FRESHENER (PURE 3D FLOATING TRANSPARENT CANS MARQUEE) -->
+  <!-- Designed to fit 100% inside laptop screen without vertical cutoffs! -->
+  <section id="vip-airfreshener" class="py-9 lg:py-12 bg-gradient-to-b from-[#0A142F] via-[#0E1F4D] to-[#0A142F] text-white relative overflow-hidden border-b border-slate-800">
     
     <!-- Top Compact Header (Fits Screen) -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 mb-6">
-      <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-[11px] font-bold tracking-wider uppercase mb-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 mb-4">
+      <div class="inline-flex items-center space-x-2 px-3.5 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-[11px] font-bold tracking-wider uppercase mb-1.5">
         <i class="fa-solid fa-crown text-amber-400 mr-1"></i>
         <span>ROYAL AURA SIGNATURE VIP PRODUCT</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold tracking-tight text-white">
-        D'VOLA PARIS <span class="gold-gradient-text">300ml Moving Air Freshener Gallery</span>
+        D'VOLA PARIS <span class="gold-gradient-text">300ml Floating Air Freshener Gallery</span>
       </h2>
-      <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mt-1">
-        All 12 signature luxury room aerosols gliding continuously. 24 Cans / Master Carton &bull; Direct Dubai Export.
+      <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mt-0.5">
+        All 12 signature luxury aerosols floating with contour physics. 24 Cans / Master Carton &bull; Direct Dubai Export.
       </p>
     </div>
 
-    <!-- THE CONTINUOUS HORIZONTAL MOVING STRIP OF AIR FRESHENERS -->
-    <div class="marquee-container relative w-full overflow-hidden py-2 select-none">
+    <!-- THE CONTINUOUS HORIZONTAL MOVING STRIP OF 3D FLOATING AIR FRESHENERS -->
+    <div class="marquee-container relative w-full overflow-hidden py-3 select-none">
       
-      <!-- Subtle side shadows -->
+      <!-- Side gradient shadow masks -->
       <div class="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-[#0A142F] to-transparent z-10 pointer-events-none"></div>
       <div class="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-[#0A142F] to-transparent z-10 pointer-events-none"></div>
 
-      <!-- Moving Track (All 12 Cans) -->
-      <div class="marquee-track-left items-stretch space-x-4 px-4" id="movingCansTrack">
-        <!-- Injected dynamically by JS with all 12 cans + duplicates -->
+      <!-- Moving Track with Transparent Floating Cans -->
+      <div class="marquee-track-left items-stretch space-x-5 px-4" id="movingCansTrack">
+        <!-- Injected dynamically by JS with transparent PNGs & wave animation -->
       </div>
     </div>
 
-    <!-- Bottom Controls & Quick Specs Bar (Fits on Screen) -->
-    <div class="max-w-5xl mx-auto px-4 mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-300">
+    <!-- Bottom Controls & Quick Specs Bar -->
+    <div class="max-w-5xl mx-auto px-4 mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
       <div class="flex items-center space-x-2">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-emerald-300 font-semibold">Hover to pause continuous motion &bull; Click any can to order via WhatsApp</span>
+        <span class="text-emerald-300 font-semibold text-[11px]">Hover over any can to pause motion &bull; Real 3D Transparent Cutouts</span>
       </div>
-      <div class="flex items-center space-x-4">
-        <span class="bg-white/10 px-3 py-1 rounded-md text-[11px] text-amber-300 font-bold border border-white/10">
+      <div class="flex items-center space-x-3">
+        <span class="bg-white/10 px-2.5 py-0.5 rounded text-[11px] text-amber-300 font-bold border border-white/10">
           300ml &bull; 10.14 FL.OZ.
         </span>
-        <span class="bg-white/10 px-3 py-1 rounded-md text-[11px] text-slate-200 font-bold border border-white/10">
+        <span class="bg-white/10 px-2.5 py-0.5 rounded text-[11px] text-slate-200 font-bold border border-white/10">
           24 Cans / Master Carton
         </span>
-        <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20bulk%20price%20for%20D'VOLA%20Air%20Fresheners" target="_blank" class="px-4 py-1.5 rounded-lg text-slate-950 font-bold text-xs gold-gradient-bg hover:opacity-90 transition flex items-center space-x-1 shadow">
+        <a href="https://wa.me/971501234567?text=Hello%20Royal%20Aura,%20I%20want%20bulk%20price%20for%20D'VOLA%20Air%20Fresheners" target="_blank" class="px-3.5 py-1 rounded-lg text-slate-950 font-bold text-xs gold-gradient-bg hover:opacity-90 transition flex items-center space-x-1 shadow">
           <i class="fa-brands fa-whatsapp"></i>
           <span>Order All 12 Fragrances</span>
         </a>
@@ -484,7 +489,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Title -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-slate-200 gap-3">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-7 pb-4 border-b border-slate-200 gap-3">
         <div>
           <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 border border-blue-200 text-royal-blue text-[11px] font-bold uppercase tracking-wider mb-1">
             <i class="fa-solid fa-layer-group text-royal-gold mr-1"></i>
@@ -577,8 +582,8 @@
         
         <!-- Axe Card -->
         <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-lg transition flex flex-col">
-          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
-            <span class="absolute top-3 left-3 bg-black text-amber-400 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+          <div class="bg-white p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
+            <span class="absolute top-3 left-3 bg-black text-amber-400 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shadow">
               Made in South Africa 🇿🇦
             </span>
             <img src="assets/axe/axe_bodysprays_collection.jpg" alt="Axe Body Sprays Range" class="max-h-48 object-contain hover:scale-105 transition-transform" />
@@ -608,8 +613,8 @@
 
         <!-- Nivea Card -->
         <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-lg transition flex flex-col">
-          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
-            <span class="absolute top-3 left-3 bg-blue-900 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+          <div class="bg-white p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
+            <span class="absolute top-3 left-3 bg-blue-900 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shadow">
               Made in Germany 🇩🇪
             </span>
             <img src="assets/nivea/nivea_deodorants_collection.jpg" alt="Nivea Deodorants Range" class="max-h-48 object-contain hover:scale-105 transition-transform" />
@@ -639,8 +644,8 @@
 
         <!-- Dove Card -->
         <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-lg transition flex flex-col">
-          <div class="bg-slate-100 p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
-            <span class="absolute top-3 left-3 bg-sky-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+          <div class="bg-white p-4 relative overflow-hidden flex items-center justify-center min-h-[220px]">
+            <span class="absolute top-3 left-3 bg-sky-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shadow">
               Made in Russia 🇷🇺
             </span>
             <img src="assets/dove/dove_sprays_collection.jpg" alt="Dove Body Sprays Range" class="max-h-48 object-contain hover:scale-105 transition-transform" />
@@ -824,7 +829,7 @@
 
   <!-- 10. JAVASCRIPT ENGINE -->
   <script>
-    // 12 D'VOLA PARIS AIR FRESHENERS DATA
+    // 12 D'VOLA PARIS AIR FRESHENERS DATA (USING TRANSPARENT PNG CUTOUTS)
     const DVOLA_SCENTS = [
       {
         id: 'aziz',
@@ -833,7 +838,7 @@
         tag: 'Warm Amber & Golden Spice',
         badge: 'Top Seller',
         badgeColor: 'bg-amber-400 text-slate-950',
-        img: 'assets/air_freshener/dvola_aziz.jpg'
+        img: 'assets/air_freshener/dvola_aziz.png'
       },
       {
         id: 'dirham',
@@ -842,7 +847,7 @@
         tag: 'Fresh Citrus & Cardamom',
         badge: 'Classic Heritage',
         badgeColor: 'bg-slate-200 text-slate-900',
-        img: 'assets/air_freshener/dvola_dirham.jpg'
+        img: 'assets/air_freshener/dvola_dirham.png'
       },
       {
         id: 'black_bakhoor',
@@ -851,7 +856,7 @@
         tag: 'Aged Agarwood & Taif Rose',
         badge: 'Luxury Oud',
         badgeColor: 'bg-rose-500 text-white',
-        img: 'assets/air_freshener/dvola_black_bakhoor.jpg'
+        img: 'assets/air_freshener/dvola_black_bakhoor.png'
       },
       {
         id: 'black',
@@ -860,7 +865,7 @@
         tag: 'Dark Leather & Patchouli',
         badge: 'Modern Noir',
         badgeColor: 'bg-neutral-800 text-amber-400 border border-neutral-700',
-        img: 'assets/air_freshener/dvola_black.jpg'
+        img: 'assets/air_freshener/dvola_black.png'
       },
       {
         id: 'lavender',
@@ -869,7 +874,7 @@
         tag: 'Calming Lavender & Soft Musk',
         badge: 'Relaxation',
         badgeColor: 'bg-indigo-500 text-white',
-        img: 'assets/air_freshener/dvola_lavender.jpg'
+        img: 'assets/air_freshener/dvola_lavender.png'
       },
       {
         id: 'jasmine',
@@ -878,7 +883,7 @@
         tag: 'Pure White Dew Petals',
         badge: 'Floral Pure',
         badgeColor: 'bg-emerald-500 text-white',
-        img: 'assets/air_freshener/dvola_jasmine.jpg'
+        img: 'assets/air_freshener/dvola_jasmine.png'
       },
       {
         id: 'sandal',
@@ -887,7 +892,7 @@
         tag: 'Creamy Sandalwood & Amber',
         badge: 'Aristocratic',
         badgeColor: 'bg-amber-700 text-white',
-        img: 'assets/air_freshener/dvola_sandal.jpg'
+        img: 'assets/air_freshener/dvola_sandal.png'
       },
       {
         id: 'strawberry',
@@ -896,7 +901,7 @@
         tag: 'Sun-Ripened Wild Berries',
         badge: 'Fruity Sweet',
         badgeColor: 'bg-red-500 text-white',
-        img: 'assets/air_freshener/dvola_strawberry.jpg'
+        img: 'assets/air_freshener/dvola_strawberry.png'
       },
       {
         id: 'yuri',
@@ -905,7 +910,7 @@
         tag: 'Casa Blanca Lily & Dew',
         badge: 'Exotic Bloom',
         badgeColor: 'bg-teal-500 text-white',
-        img: 'assets/air_freshener/dvola_yuri.jpg'
+        img: 'assets/air_freshener/dvola_yuri.png'
       },
       {
         id: 'sabaya',
@@ -914,7 +919,7 @@
         tag: 'Damask Rose & Sweet Peach',
         badge: 'Delicate Rose',
         badgeColor: 'bg-pink-500 text-white',
-        img: 'assets/air_freshener/dvola_sabaya.jpg'
+        img: 'assets/air_freshener/dvola_sabaya.png'
       },
       {
         id: 'floral_lemon',
@@ -923,7 +928,7 @@
         tag: 'Invigorating Lemon & Blooms',
         badge: 'Citrus Boost',
         badgeColor: 'bg-yellow-400 text-slate-950',
-        img: 'assets/air_freshener/dvola_floral_lemon.jpg'
+        img: 'assets/air_freshener/dvola_floral_lemon.png'
       },
       {
         id: 'strawberry_edition',
@@ -932,11 +937,11 @@
         tag: 'Glazed Berries & Cream',
         badge: 'Special Reserve',
         badgeColor: 'bg-rose-400 text-slate-950',
-        img: 'assets/air_freshener/dvola_strawberry_edition.jpg'
+        img: 'assets/air_freshener/dvola_strawberry_edition.png'
       }
     ];
 
-    // FMCG BRAND PRODUCTS DATA
+    // FMCG BRAND PRODUCTS DATA (ENHANCED STUDIO VISUALS)
     const BRAND_PRODUCTS = [
       // DOVE
       {
@@ -1108,55 +1113,57 @@
       initMobileMenu();
     });
 
-    // 1. BUILD CONTINUOUS MOVING AIR FRESHENER MARQUEE
+    // 1. BUILD CONTINUOUS MOVING AIR FRESHENER MARQUEE (PURE TRANSPARENT FLOATING CANS)
     function buildMovingAirFreshenerTrack() {
       const track = document.getElementById('movingCansTrack');
       if (!track) return;
 
-      // Duplicate list so animation seamlessly loops 100% without gaps
       const doubleList = [...DVOLA_SCENTS, ...DVOLA_SCENTS];
 
-      track.innerHTML = doubleList.map(s => `
-        <div class="hover-can w-64 sm:w-72 flex-shrink-0 bg-white/5 hover:bg-white/10 rounded-2xl p-4 border border-white/10 hover:border-amber-400/50 transition-all flex flex-col justify-between group cursor-pointer shadow-lg" onclick="orderScent('${s.name}')">
-          
-          <!-- Top Badge -->
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${s.badgeColor}">
-              ${s.badge}
-            </span>
-            <span class="text-[10px] text-slate-400 font-semibold">
-              300ml
-            </span>
-          </div>
-
-          <!-- Can Image (Compact screen-fitting height: max 190px) -->
-          <div class="h-44 sm:h-48 flex items-center justify-center my-1 overflow-hidden">
-            <img src="${s.img}" alt="${s.name}" class="max-h-40 sm:max-h-44 w-auto object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)]" />
-          </div>
-
-          <!-- Details -->
-          <div class="text-center mt-2 space-y-1">
-            <h3 class="font-serif font-bold text-base text-amber-300 group-hover:text-amber-200">
-              ${s.name}
-            </h3>
-            <div class="text-[11px] text-slate-300 font-medium truncate">
-              ${s.subtitle}
+      track.innerHTML = doubleList.map((s, idx) => {
+        const delayClass = `delay-${(idx % 5) + 1}`;
+        return `
+          <div class="hover-can w-60 sm:w-64 flex-shrink-0 bg-white/5 hover:bg-white/10 rounded-2xl p-4 border border-white/10 hover:border-amber-400/50 transition-all flex flex-col justify-between group cursor-pointer shadow-lg backdrop-blur-sm" onclick="orderScent('${s.name}')">
+            
+            <!-- Top Badge -->
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${s.badgeColor}">
+                ${s.badge}
+              </span>
+              <span class="text-[10px] text-amber-300/90 font-bold">
+                300ml
+              </span>
             </div>
-            <div class="text-[10px] text-slate-400 truncate">
-              ${s.tag}
+
+            <!-- Can Image (100% Transparent PNG with contour drop shadow & floating wave physics) -->
+            <div class="h-44 sm:h-48 flex items-center justify-center my-1 overflow-visible">
+              <img src="${s.img}" alt="${s.name}" class="floating-can ${delayClass} max-h-40 sm:max-h-44 w-auto object-contain" />
             </div>
-          </div>
 
-          <!-- Action Button -->
-          <div class="mt-3 pt-2 border-t border-white/10">
-            <button class="w-full py-1.5 rounded-lg text-slate-950 font-bold text-[11px] gold-gradient-bg group-hover:opacity-95 transition flex items-center justify-center space-x-1 shadow">
-              <i class="fa-brands fa-whatsapp text-xs"></i>
-              <span>Order ${s.name}</span>
-            </button>
-          </div>
+            <!-- Details -->
+            <div class="text-center mt-2 space-y-0.5">
+              <h3 class="font-serif font-bold text-base text-amber-300 group-hover:text-amber-200">
+                ${s.name}
+              </h3>
+              <div class="text-[11px] text-slate-200 font-medium truncate">
+                ${s.subtitle}
+              </div>
+              <div class="text-[10px] text-slate-400 truncate">
+                ${s.tag}
+              </div>
+            </div>
 
-        </div>
-      `).join('');
+            <!-- Action Button -->
+            <div class="mt-3 pt-2 border-t border-white/10">
+              <button class="w-full py-1.5 rounded-lg text-slate-950 font-bold text-[11px] gold-gradient-bg group-hover:opacity-95 transition flex items-center justify-center space-x-1 shadow">
+                <i class="fa-brands fa-whatsapp text-xs"></i>
+                <span>Order ${s.name}</span>
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
     }
 
     window.orderScent = function(name) {
@@ -1188,14 +1195,14 @@
         grid.innerHTML = filtered.map(p => `
           <div class="product-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
             
-            <div class="bg-slate-50 p-4 flex items-center justify-center min-h-[200px] relative border-b border-slate-100">
-              <span class="absolute top-3 left-3 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white border border-slate-200 text-royal-navy shadow-sm">
+            <div class="bg-white p-4 flex items-center justify-center min-h-[200px] relative border-b border-slate-100">
+              <span class="absolute top-3 left-3 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-50 border border-slate-200 text-royal-navy shadow-sm">
                 ${p.badge}
               </span>
               <span class="absolute top-3 right-3 text-[10px] font-semibold text-slate-500">
                 ${p.origin}
               </span>
-              <img src="${p.img}" alt="${p.title}" class="max-h-40 w-auto object-contain" loading="lazy" />
+              <img src="${p.img}" alt="${p.title}" class="max-h-40 w-auto object-contain transition-transform duration-300 hover:scale-105" loading="lazy" />
             </div>
 
             <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
